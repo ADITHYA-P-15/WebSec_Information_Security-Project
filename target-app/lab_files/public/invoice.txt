@@ -1,0 +1,5 @@
+NORTHSTAR SUPPLY
+Order receipt
+
+Demo fixture for the local storefront.
+This sample file contains no real customer or payment information.

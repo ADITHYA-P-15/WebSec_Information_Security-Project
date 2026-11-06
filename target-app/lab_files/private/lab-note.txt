@@ -1,0 +1,1 @@
+TRAINING_LAB_PRIVATE_NOTE: fabricated local-only fixture for traversal exercises.

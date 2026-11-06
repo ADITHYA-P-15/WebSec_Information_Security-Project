@@ -1,0 +1,396 @@
+{
+  "mode": "read-only correlation",
+  "assessment_id": 16,
+  "findings_processed": 21,
+  "relationships": [
+    {
+      "type": "SHARED_ENDPOINT_GROUP",
+      "endpoint": "/",
+      "finding_ids": [
+        273,
+        275,
+        276,
+        277,
+        278,
+        280,
+        281,
+        283,
+        284,
+        285
+      ],
+      "evidence_ids_by_finding": {
+        "273": [
+          1102
+        ],
+        "275": [
+          1104
+        ],
+        "276": [
+          1106
+        ],
+        "277": [
+          1108
+        ],
+        "278": [
+          1113
+        ],
+        "280": [
+          1119
+        ],
+        "281": [
+          1123
+        ],
+        "283": [
+          1129
+        ],
+        "284": [
+          1131
+        ],
+        "285": [
+          1133
+        ]
+      },
+      "match_basis": "multiple findings have evidence for this endpoint",
+      "verified_relationship": false,
+      "note": "Endpoint-level grouping only; does not establish a common root cause, exploitability, or an attack path."
+    },
+    {
+      "type": "SHARED_ENDPOINT_GROUP",
+      "endpoint": "/login",
+      "finding_ids": [
+        274,
+        275,
+        276,
+        277,
+        278,
+        279,
+        280,
+        281,
+        282,
+        283,
+        284,
+        285
+      ],
+      "evidence_ids_by_finding": {
+        "274": [
+          1103
+        ],
+        "275": [
+          1105
+        ],
+        "276": [
+          1107
+        ],
+        "277": [
+          1109,
+          1112
+        ],
+        "278": [
+          1114,
+          1117
+        ],
+        "279": [
+          1118
+        ],
+        "280": [
+          1120
+        ],
+        "281": [
+          1124,
+          1127
+        ],
+        "282": [
+          1128
+        ],
+        "283": [
+          1130
+        ],
+        "284": [
+          1132
+        ],
+        "285": [
+          1134
+        ]
+      },
+      "match_basis": "multiple findings have evidence for this endpoint",
+      "verified_relationship": false,
+      "note": "Endpoint-level grouping only; does not establish a common root cause, exploitability, or an attack path."
+    },
+    {
+      "type": "SCANNER_TO_LIVE_CHECK",
+      "finding_id": 275,
+      "source_evidence_id": 1104,
+      "related_evidence_id": 1140,
+      "match_basis": "same plugin, URL and method"
+    },
+    {
+      "type": "SCANNER_TO_LIVE_CHECK",
+      "finding_id": 275,
+      "source_evidence_id": 1105,
+      "related_evidence_id": 1141,
+      "match_basis": "same plugin, URL and method"
+    },
+    {
+      "type": "SCANNER_TO_LIVE_CHECK",
+      "finding_id": 276,
+      "source_evidence_id": 1106,
+      "related_evidence_id": 1158,
+      "match_basis": "same plugin, URL and method"
+    },
+    {
+      "type": "SCANNER_TO_LIVE_CHECK",
+      "finding_id": 276,
+      "source_evidence_id": 1107,
+      "related_evidence_id": 1159,
+      "match_basis": "same plugin, URL and method"
+    },
+    {
+      "type": "SCANNER_TO_LIVE_CHECK",
+      "finding_id": 277,
+      "source_evidence_id": 1108,
+      "related_evidence_id": 1153,
+      "match_basis": "same plugin, URL and method"
+    },
+    {
+      "type": "SCANNER_TO_LIVE_CHECK",
+      "finding_id": 277,
+      "source_evidence_id": 1109,
+      "related_evidence_id": 1154,
+      "match_basis": "same plugin, URL and method"
+    },
+    {
+      "type": "SCANNER_TO_LIVE_CHECK",
+      "finding_id": 277,
+      "source_evidence_id": 1110,
+      "related_evidence_id": 1155,
+      "match_basis": "same plugin, URL and method"
+    },
+    {
+      "type": "SCANNER_TO_LIVE_CHECK",
+      "finding_id": 277,
+      "source_evidence_id": 1111,
+      "related_evidence_id": 1156,
+      "match_basis": "same plugin, URL and method"
+    },
+    {
+      "type": "SCANNER_TO_LIVE_CHECK",
+      "finding_id": 277,
+      "source_evidence_id": 1112,
+      "related_evidence_id": 1157,
+      "match_basis": "same URL; GET substitute for POST; original POST response not verified"
+    },
+    {
+      "type": "SHARED_ENDPOINT_GROUP",
+      "endpoint": "/robots.txt",
+      "finding_ids": [
+        277,
+        278,
+        280,
+        281
+      ],
+      "evidence_ids_by_finding": {
+        "277": [
+          1110
+        ],
+        "278": [
+          1115
+        ],
+        "280": [
+          1121
+        ],
+        "281": [
+          1125
+        ]
+      },
+      "match_basis": "multiple findings have evidence for this endpoint",
+      "verified_relationship": false,
+      "note": "Endpoint-level grouping only; does not establish a common root cause, exploitability, or an attack path."
+    },
+    {
+      "type": "SHARED_ENDPOINT_GROUP",
+      "endpoint": "/sitemap.xml",
+      "finding_ids": [
+        277,
+        278,
+        280,
+        281
+      ],
+      "evidence_ids_by_finding": {
+        "277": [
+          1111
+        ],
+        "278": [
+          1116
+        ],
+        "280": [
+          1122
+        ],
+        "281": [
+          1126
+        ]
+      },
+      "match_basis": "multiple findings have evidence for this endpoint",
+      "verified_relationship": false,
+      "note": "Endpoint-level grouping only; does not establish a common root cause, exploitability, or an attack path."
+    },
+    {
+      "type": "SCANNER_TO_LIVE_CHECK",
+      "finding_id": 278,
+      "source_evidence_id": 1113,
+      "related_evidence_id": 1135,
+      "match_basis": "same plugin, URL and method"
+    },
+    {
+      "type": "SCANNER_TO_LIVE_CHECK",
+      "finding_id": 278,
+      "source_evidence_id": 1114,
+      "related_evidence_id": 1136,
+      "match_basis": "same plugin, URL and method"
+    },
+    {
+      "type": "SCANNER_TO_LIVE_CHECK",
+      "finding_id": 278,
+      "source_evidence_id": 1115,
+      "related_evidence_id": 1137,
+      "match_basis": "same plugin, URL and method"
+    },
+    {
+      "type": "SCANNER_TO_LIVE_CHECK",
+      "finding_id": 278,
+      "source_evidence_id": 1116,
+      "related_evidence_id": 1138,
+      "match_basis": "same plugin, URL and method"
+    },
+    {
+      "type": "SCANNER_TO_LIVE_CHECK",
+      "finding_id": 278,
+      "source_evidence_id": 1117,
+      "related_evidence_id": 1139,
+      "match_basis": "same URL; GET substitute for POST; original POST response not verified"
+    },
+    {
+      "type": "SCANNER_TO_LIVE_CHECK",
+      "finding_id": 279,
+      "source_evidence_id": 1118,
+      "related_evidence_id": 1161,
+      "match_basis": "same plugin, URL and method"
+    },
+    {
+      "type": "SCANNER_TO_LIVE_CHECK",
+      "finding_id": 280,
+      "source_evidence_id": 1119,
+      "related_evidence_id": 1162,
+      "match_basis": "same plugin, URL and method"
+    },
+    {
+      "type": "SCANNER_TO_LIVE_CHECK",
+      "finding_id": 280,
+      "source_evidence_id": 1120,
+      "related_evidence_id": 1163,
+      "match_basis": "same plugin, URL and method"
+    },
+    {
+      "type": "SCANNER_TO_LIVE_CHECK",
+      "finding_id": 280,
+      "source_evidence_id": 1121,
+      "related_evidence_id": 1164,
+      "match_basis": "same plugin, URL and method"
+    },
+    {
+      "type": "SCANNER_TO_LIVE_CHECK",
+      "finding_id": 280,
+      "source_evidence_id": 1122,
+      "related_evidence_id": 1165,
+      "match_basis": "same plugin, URL and method"
+    },
+    {
+      "type": "SCANNER_TO_LIVE_CHECK",
+      "finding_id": 281,
+      "source_evidence_id": 1123,
+      "related_evidence_id": 1148,
+      "match_basis": "same plugin, URL and method"
+    },
+    {
+      "type": "SCANNER_TO_LIVE_CHECK",
+      "finding_id": 281,
+      "source_evidence_id": 1124,
+      "related_evidence_id": 1149,
+      "match_basis": "same plugin, URL and method"
+    },
+    {
+      "type": "SCANNER_TO_LIVE_CHECK",
+      "finding_id": 281,
+      "source_evidence_id": 1125,
+      "related_evidence_id": 1150,
+      "match_basis": "same plugin, URL and method"
+    },
+    {
+      "type": "SCANNER_TO_LIVE_CHECK",
+      "finding_id": 281,
+      "source_evidence_id": 1126,
+      "related_evidence_id": 1151,
+      "match_basis": "same plugin, URL and method"
+    },
+    {
+      "type": "SCANNER_TO_LIVE_CHECK",
+      "finding_id": 281,
+      "source_evidence_id": 1127,
+      "related_evidence_id": 1152,
+      "match_basis": "same URL; GET substitute for POST; original POST response not verified"
+    },
+    {
+      "type": "SCANNER_TO_LIVE_CHECK",
+      "finding_id": 282,
+      "source_evidence_id": 1128,
+      "related_evidence_id": 1160,
+      "match_basis": "same plugin, URL and method"
+    },
+    {
+      "type": "SCANNER_TO_LIVE_CHECK",
+      "finding_id": 283,
+      "source_evidence_id": 1129,
+      "related_evidence_id": 1142,
+      "match_basis": "same plugin, URL and method"
+    },
+    {
+      "type": "SCANNER_TO_LIVE_CHECK",
+      "finding_id": 283,
+      "source_evidence_id": 1130,
+      "related_evidence_id": 1143,
+      "match_basis": "same plugin, URL and method"
+    },
+    {
+      "type": "SCANNER_TO_LIVE_CHECK",
+      "finding_id": 284,
+      "source_evidence_id": 1131,
+      "related_evidence_id": 1144,
+      "match_basis": "same plugin, URL and method"
+    },
+    {
+      "type": "SCANNER_TO_LIVE_CHECK",
+      "finding_id": 284,
+      "source_evidence_id": 1132,
+      "related_evidence_id": 1145,
+      "match_basis": "same plugin, URL and method"
+    },
+    {
+      "type": "SCANNER_TO_LIVE_CHECK",
+      "finding_id": 285,
+      "source_evidence_id": 1133,
+      "related_evidence_id": 1146,
+      "match_basis": "same plugin, URL and method"
+    },
+    {
+      "type": "SCANNER_TO_LIVE_CHECK",
+      "finding_id": 285,
+      "source_evidence_id": 1134,
+      "related_evidence_id": 1147,
+      "match_basis": "same plugin, URL and method"
+    }
+  ],
+  "notes": [
+    "Relationships are candidates, not proof of exploitability.",
+    "No findings or evidence records are merged or deleted.",
+    "Safe GET substitutes do not prove the original POST response."
+  ]
+}

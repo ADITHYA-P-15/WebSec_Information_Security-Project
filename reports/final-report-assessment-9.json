@@ -1,0 +1,2478 @@
+{
+  "report_metadata": {
+    "title": "Web Application Security Assessment Report",
+    "assessment_id": 9,
+    "generated_at": "2026-11-03T17:26:43.018543+00:00",
+    "framework": "Web Application Security Assessment Framework",
+    "risk_score_note": "Risk scores are project-specific prioritization scores, not CVSS scores."
+  },
+  "assessment": {
+    "id": 9,
+    "target_url": "http://localhost:5001",
+    "status": "PARTIAL",
+    "created_at": "2026-11-03 17:26:42.864280"
+  },
+  "execution_stages": [
+    {
+      "name": "reconnaissance_and_role_mapping",
+      "status": "FAILED",
+      "details": "RuntimeError: Could not authenticate configured role 'user'.",
+      "started_at": "2026-11-03T17:26:42.868495",
+      "finished_at": "2026-11-03T17:26:42.942153"
+    },
+    {
+      "name": "role_aware_authorization_and_idor",
+      "status": "FAILED",
+      "details": "RuntimeError: Login request failed for alice: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /login (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+      "started_at": "2026-11-03T17:26:42.943963",
+      "finished_at": "2026-11-03T17:26:42.945198"
+    },
+    {
+      "name": "common_web_vulnerability_probes",
+      "status": "FAILED",
+      "details": "ConnectionError: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /api/products/search?q=codex-no-match-7f3a (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+      "started_at": "2026-11-03T17:26:42.949273",
+      "finished_at": "2026-11-03T17:26:42.949744"
+    },
+    {
+      "name": "zap_candidate_import",
+      "status": "SUCCEEDED",
+      "details": "Imported scoped ZAP report zap-baseline-report.json.",
+      "started_at": "2026-11-03T17:26:42.950540",
+      "finished_at": "2026-11-03T17:26:42.968848"
+    },
+    {
+      "name": "live_response_verification",
+      "status": "SUCCEEDED",
+      "details": "Safe live-response checks saved to zap-live-verification-assessment-9.json.",
+      "started_at": "2026-11-03T17:26:42.969243",
+      "finished_at": "2026-11-03T17:26:42.978658"
+    },
+    {
+      "name": "verification_evidence_triage",
+      "status": "SUCCEEDED",
+      "details": "Persisted matching live checks as evidence; finding states unchanged.",
+      "started_at": "2026-11-03T17:26:42.979243",
+      "finished_at": "2026-11-03T17:26:42.990817"
+    },
+    {
+      "name": "risk_assessment",
+      "status": "SUCCEEDED",
+      "details": "Completed",
+      "started_at": "2026-11-03T17:26:42.992346",
+      "finished_at": "2026-11-03T17:26:42.993847"
+    },
+    {
+      "name": "attack_path_analysis",
+      "status": "SUCCEEDED",
+      "details": "Completed",
+      "started_at": "2026-11-03T17:26:42.995102",
+      "finished_at": "2026-11-03T17:26:42.998192"
+    },
+    {
+      "name": "finding_correlation",
+      "status": "SUCCEEDED",
+      "details": "Completed",
+      "started_at": "2026-11-03T17:26:42.999133",
+      "finished_at": "2026-11-03T17:26:43.001626"
+    },
+    {
+      "name": "report_generation",
+      "status": "SUCCEEDED",
+      "details": "Completed",
+      "started_at": "2026-11-03T17:26:43.003885",
+      "finished_at": "2026-11-03T17:26:43.012949"
+    }
+  ],
+  "targets": [
+    {
+      "id": 9,
+      "url": "http://localhost:5001",
+      "status": "ACTIVE"
+    }
+  ],
+  "assets": [],
+  "endpoints": [],
+  "access_matrix": [],
+  "summary": {
+    "finding_count": 11,
+    "candidate_finding_count": 11,
+    "severity_distribution": {
+      "LOW": 8,
+      "UNASSESSED": 3
+    },
+    "finding_status_distribution": {
+      "CANDIDATE": 11
+    },
+    "attack_path_count": 0,
+    "endpoint_count": 0,
+    "asset_count": 0,
+    "execution_stage_count": 10,
+    "execution_stage_status_distribution": {
+      "FAILED": 3,
+      "SUCCEEDED": 7
+    },
+    "verified_finding_count": 0,
+    "remediated_finding_count": 0,
+    "reopened_finding_count": 0
+  },
+  "findings": [
+    {
+      "id": 128,
+      "title": "ZAP: Missing Anti-clickjacking Header [Plugin 10020]",
+      "vulnerability_type": "SECURITY_MISCONFIGURATION",
+      "severity": "UNASSESSED",
+      "risk_score": 25.0,
+      "risk_severity": "LOW",
+      "risk_factors": {
+        "confidence": 2,
+        "exploitability": 2,
+        "impact": 2
+      },
+      "risk_method": "project_preliminary_risk_v1",
+      "status": "CANDIDATE",
+      "description": "<p>The response does not protect against 'ClickJacking' attacks. It should include either Content-Security-Policy with 'frame-ancestors' directive or X-Frame-Options.</p>\n\nZAP suggested solution:\n<p>Modern Web browsers support the Content-Security-Policy and X-Frame-Options HTTP headers. Ensure one of them is set on all web pages returned by your site/app.</p><p>If you expect the page to be framed only by pages on your server (e.g. it's part of a FRAMESET) then you'll want to use SAMEORIGIN, otherwise if you never expect the page to be framed, you should use DENY. Alternatively consider implementing Content Security Policy's \"frame-ancestors\" directive.</p>",
+      "evidence": [
+        {
+          "id": 565,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 17:26:42.954022",
+          "data": {
+            "alert_name": "Missing Anti-clickjacking Header",
+            "confidence": "2",
+            "description": "<p>The response does not protect against 'ClickJacking' attacks. It should include either Content-Security-Policy with 'frame-ancestors' directive or X-Frame-Options.</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "x-frame-options",
+            "plugin_id": "10020",
+            "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Frame-Options</p>",
+            "risk_description": "Medium (Medium)",
+            "scanner_risk": "MEDIUM",
+            "solution": "<p>Modern Web browsers support the Content-Security-Policy and X-Frame-Options HTTP headers. Ensure one of them is set on all web pages returned by your site/app.</p><p>If you expect the page to be framed only by pages on your server (e.g. it's part of a FRAMESET) then you'll want to use SAMEORIGIN, otherwise if you never expect the page to be framed, you should use DENY. Alternatively consider implementing Content Security Policy's \"frame-ancestors\" directive.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001",
+            "verified": false
+          }
+        },
+        {
+          "id": 566,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 17:26:42.954276",
+          "data": {
+            "alert_name": "Missing Anti-clickjacking Header",
+            "confidence": "2",
+            "description": "<p>The response does not protect against 'ClickJacking' attacks. It should include either Content-Security-Policy with 'frame-ancestors' directive or X-Frame-Options.</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "x-frame-options",
+            "plugin_id": "10020",
+            "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Frame-Options</p>",
+            "risk_description": "Medium (Medium)",
+            "scanner_risk": "MEDIUM",
+            "solution": "<p>Modern Web browsers support the Content-Security-Policy and X-Frame-Options HTTP headers. Ensure one of them is set on all web pages returned by your site/app.</p><p>If you expect the page to be framed only by pages on your server (e.g. it's part of a FRAMESET) then you'll want to use SAMEORIGIN, otherwise if you never expect the page to be framed, you should use DENY. Alternatively consider implementing Content Security Policy's \"frame-ancestors\" directive.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/login",
+            "verified": false
+          }
+        },
+        {
+          "id": 601,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 17:26:42.982308",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Missing Anti-clickjacking Header",
+            "observed_status": null,
+            "plugin_id": "10020",
+            "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: / (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+            "relevant_headers": {},
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "INCONCLUSIVE",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "INCONCLUSIVE",
+            "verified_vulnerability": false
+          }
+        },
+        {
+          "id": 602,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 17:26:42.982621",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Missing Anti-clickjacking Header",
+            "observed_status": null,
+            "plugin_id": "10020",
+            "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /login (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+            "relevant_headers": {},
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001/login",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "INCONCLUSIVE",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "INCONCLUSIVE",
+            "verified_vulnerability": false
+          }
+        }
+      ],
+      "status_history": [],
+      "latest_retest": null
+    },
+    {
+      "id": 129,
+      "title": "ZAP: X-Content-Type-Options Header Missing [Plugin 10021]",
+      "vulnerability_type": "SECURITY_MISCONFIGURATION",
+      "severity": "UNASSESSED",
+      "risk_score": 25.0,
+      "risk_severity": "LOW",
+      "risk_factors": {
+        "confidence": 2,
+        "exploitability": 2,
+        "impact": 2
+      },
+      "risk_method": "project_preliminary_risk_v1",
+      "status": "CANDIDATE",
+      "description": "<p>The Anti-MIME-Sniffing header X-Content-Type-Options was not set to 'nosniff'. This allows older versions of Internet Explorer and Chrome to perform MIME-sniffing on the response body, potentially causing the response body to be interpreted and displayed as a content type other than the declared content type. Current (early 2014) and legacy versions of Firefox will use the declared content type (if one is set), rather than performing MIME-sniffing.</p>\n\nZAP suggested solution:\n<p>Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to 'nosniff' for all web pages.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that does not perform MIME-sniffing at all, or that can be directed by the web application/web server to not perform MIME-sniffing.</p>",
+      "evidence": [
+        {
+          "id": 567,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 17:26:42.955637",
+          "data": {
+            "alert_name": "X-Content-Type-Options Header Missing",
+            "confidence": "2",
+            "description": "<p>The Anti-MIME-Sniffing header X-Content-Type-Options was not set to 'nosniff'. This allows older versions of Internet Explorer and Chrome to perform MIME-sniffing on the response body, potentially causing the response body to be interpreted and displayed as a content type other than the declared content type. Current (early 2014) and legacy versions of Firefox will use the declared content type (if one is set), rather than performing MIME-sniffing.</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "x-content-type-options",
+            "plugin_id": "10021",
+            "reference": "<p>https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/compatibility/gg622941(v=vs.85)</p><p>https://owasp.org/www-community/Security_Headers</p>",
+            "risk_description": "Low (Medium)",
+            "scanner_risk": "LOW",
+            "solution": "<p>Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to 'nosniff' for all web pages.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that does not perform MIME-sniffing at all, or that can be directed by the web application/web server to not perform MIME-sniffing.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001",
+            "verified": false
+          }
+        },
+        {
+          "id": 568,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 17:26:42.955821",
+          "data": {
+            "alert_name": "X-Content-Type-Options Header Missing",
+            "confidence": "2",
+            "description": "<p>The Anti-MIME-Sniffing header X-Content-Type-Options was not set to 'nosniff'. This allows older versions of Internet Explorer and Chrome to perform MIME-sniffing on the response body, potentially causing the response body to be interpreted and displayed as a content type other than the declared content type. Current (early 2014) and legacy versions of Firefox will use the declared content type (if one is set), rather than performing MIME-sniffing.</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "x-content-type-options",
+            "plugin_id": "10021",
+            "reference": "<p>https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/compatibility/gg622941(v=vs.85)</p><p>https://owasp.org/www-community/Security_Headers</p>",
+            "risk_description": "Low (Medium)",
+            "scanner_risk": "LOW",
+            "solution": "<p>Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to 'nosniff' for all web pages.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that does not perform MIME-sniffing at all, or that can be directed by the web application/web server to not perform MIME-sniffing.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/login",
+            "verified": false
+          }
+        },
+        {
+          "id": 619,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 17:26:42.988069",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "X-Content-Type-Options Header Missing",
+            "observed_status": null,
+            "plugin_id": "10021",
+            "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: / (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+            "relevant_headers": {},
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "INCONCLUSIVE",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "INCONCLUSIVE",
+            "verified_vulnerability": false
+          }
+        },
+        {
+          "id": 620,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 17:26:42.988370",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "X-Content-Type-Options Header Missing",
+            "observed_status": null,
+            "plugin_id": "10021",
+            "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /login (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+            "relevant_headers": {},
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001/login",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "INCONCLUSIVE",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "INCONCLUSIVE",
+            "verified_vulnerability": false
+          }
+        }
+      ],
+      "status_history": [],
+      "latest_retest": null
+    },
+    {
+      "id": 130,
+      "title": "ZAP: Server Leaks Version Information via \"Server\" HTTP Response Header Field [Plugin 10036]",
+      "vulnerability_type": "SECURITY_MISCONFIGURATION",
+      "severity": "UNASSESSED",
+      "risk_score": 25.0,
+      "risk_severity": "LOW",
+      "risk_factors": {
+        "confidence": 2,
+        "exploitability": 2,
+        "impact": 2
+      },
+      "risk_method": "project_preliminary_risk_v1",
+      "status": "CANDIDATE",
+      "description": "<p>The web/application server is leaking version information via the \"Server\" HTTP response header. Access to such information may facilitate attackers identifying other vulnerabilities your web/application server is subject to.</p>\n\nZAP suggested solution:\n<p>Ensure that your web server, application server, load balancer, etc. is configured to suppress the \"Server\" header or provide generic details.</p>",
+      "evidence": [
+        {
+          "id": 569,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 17:26:42.956968",
+          "data": {
+            "alert_name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+            "confidence": "3",
+            "description": "<p>The web/application server is leaking version information via the \"Server\" HTTP response header. Access to such information may facilitate attackers identifying other vulnerabilities your web/application server is subject to.</p>",
+            "method": "GET",
+            "observed_evidence": "Werkzeug/3.1.9 Python/3.14.8",
+            "parameter": "",
+            "plugin_id": "10036",
+            "reference": "<p>https://httpd.apache.org/docs/current/mod/core.html#servertokens</p><p>https://learn.microsoft.com/en-us/previous-versions/msp-n-p/ff648552(v=pandp.10)</p><p>https://www.troyhunt.com/shhh-dont-let-your-response-headers/</p>",
+            "risk_description": "Low (High)",
+            "scanner_risk": "LOW",
+            "solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to suppress the \"Server\" header or provide generic details.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001",
+            "verified": false
+          }
+        },
+        {
+          "id": 570,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 17:26:42.957213",
+          "data": {
+            "alert_name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+            "confidence": "3",
+            "description": "<p>The web/application server is leaking version information via the \"Server\" HTTP response header. Access to such information may facilitate attackers identifying other vulnerabilities your web/application server is subject to.</p>",
+            "method": "GET",
+            "observed_evidence": "Werkzeug/3.1.9 Python/3.14.8",
+            "parameter": "",
+            "plugin_id": "10036",
+            "reference": "<p>https://httpd.apache.org/docs/current/mod/core.html#servertokens</p><p>https://learn.microsoft.com/en-us/previous-versions/msp-n-p/ff648552(v=pandp.10)</p><p>https://www.troyhunt.com/shhh-dont-let-your-response-headers/</p>",
+            "risk_description": "Low (High)",
+            "scanner_risk": "LOW",
+            "solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to suppress the \"Server\" header or provide generic details.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/login",
+            "verified": false
+          }
+        },
+        {
+          "id": 571,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 17:26:42.957462",
+          "data": {
+            "alert_name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+            "confidence": "3",
+            "description": "<p>The web/application server is leaking version information via the \"Server\" HTTP response header. Access to such information may facilitate attackers identifying other vulnerabilities your web/application server is subject to.</p>",
+            "method": "GET",
+            "observed_evidence": "Werkzeug/3.1.9 Python/3.14.8",
+            "parameter": "",
+            "plugin_id": "10036",
+            "reference": "<p>https://httpd.apache.org/docs/current/mod/core.html#servertokens</p><p>https://learn.microsoft.com/en-us/previous-versions/msp-n-p/ff648552(v=pandp.10)</p><p>https://www.troyhunt.com/shhh-dont-let-your-response-headers/</p>",
+            "risk_description": "Low (High)",
+            "scanner_risk": "LOW",
+            "solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to suppress the \"Server\" header or provide generic details.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/robots.txt",
+            "verified": false
+          }
+        },
+        {
+          "id": 572,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 17:26:42.957682",
+          "data": {
+            "alert_name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+            "confidence": "3",
+            "description": "<p>The web/application server is leaking version information via the \"Server\" HTTP response header. Access to such information may facilitate attackers identifying other vulnerabilities your web/application server is subject to.</p>",
+            "method": "GET",
+            "observed_evidence": "Werkzeug/3.1.9 Python/3.14.8",
+            "parameter": "",
+            "plugin_id": "10036",
+            "reference": "<p>https://httpd.apache.org/docs/current/mod/core.html#servertokens</p><p>https://learn.microsoft.com/en-us/previous-versions/msp-n-p/ff648552(v=pandp.10)</p><p>https://www.troyhunt.com/shhh-dont-let-your-response-headers/</p>",
+            "risk_description": "Low (High)",
+            "scanner_risk": "LOW",
+            "solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to suppress the \"Server\" header or provide generic details.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/sitemap.xml",
+            "verified": false
+          }
+        },
+        {
+          "id": 573,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 17:26:42.957841",
+          "data": {
+            "alert_name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+            "confidence": "3",
+            "description": "<p>The web/application server is leaking version information via the \"Server\" HTTP response header. Access to such information may facilitate attackers identifying other vulnerabilities your web/application server is subject to.</p>",
+            "method": "POST",
+            "observed_evidence": "Werkzeug/3.1.9 Python/3.14.8",
+            "parameter": "",
+            "plugin_id": "10036",
+            "reference": "<p>https://httpd.apache.org/docs/current/mod/core.html#servertokens</p><p>https://learn.microsoft.com/en-us/previous-versions/msp-n-p/ff648552(v=pandp.10)</p><p>https://www.troyhunt.com/shhh-dont-let-your-response-headers/</p>",
+            "risk_description": "Low (High)",
+            "scanner_risk": "LOW",
+            "solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to suppress the \"Server\" header or provide generic details.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/login",
+            "verified": false
+          }
+        },
+        {
+          "id": 614,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 17:26:42.986547",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+            "observed_status": null,
+            "plugin_id": "10036",
+            "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: / (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+            "relevant_headers": {},
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "INCONCLUSIVE",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "INCONCLUSIVE",
+            "verified_vulnerability": false
+          }
+        },
+        {
+          "id": 615,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 17:26:42.986854",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+            "observed_status": null,
+            "plugin_id": "10036",
+            "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /login (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+            "relevant_headers": {},
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001/login",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "INCONCLUSIVE",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "INCONCLUSIVE",
+            "verified_vulnerability": false
+          }
+        },
+        {
+          "id": 616,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 17:26:42.987157",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+            "observed_status": null,
+            "plugin_id": "10036",
+            "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /robots.txt (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+            "relevant_headers": {},
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001/robots.txt",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "INCONCLUSIVE",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "INCONCLUSIVE",
+            "verified_vulnerability": false
+          }
+        },
+        {
+          "id": 617,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 17:26:42.987460",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+            "observed_status": null,
+            "plugin_id": "10036",
+            "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /sitemap.xml (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+            "relevant_headers": {},
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001/sitemap.xml",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "INCONCLUSIVE",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "INCONCLUSIVE",
+            "verified_vulnerability": false
+          }
+        },
+        {
+          "id": 618,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 17:26:42.987763",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+            "observed_status": null,
+            "plugin_id": "10036",
+            "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /login (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+            "relevant_headers": {},
+            "reported_method": "POST",
+            "reported_url": "http://host.docker.internal:5001/login",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "INCONCLUSIVE",
+            "verification_method": "SAFE_GET_SUBSTITUTE",
+            "verification_outcome": "INCONCLUSIVE",
+            "verified_vulnerability": false
+          }
+        }
+      ],
+      "status_history": [],
+      "latest_retest": null
+    },
+    {
+      "id": 131,
+      "title": "ZAP: Content Security Policy (CSP) Header Not Set [Plugin 10038]",
+      "vulnerability_type": "SECURITY_MISCONFIGURATION",
+      "severity": "UNASSESSED",
+      "risk_score": 25.0,
+      "risk_severity": "LOW",
+      "risk_factors": {
+        "confidence": 2,
+        "exploitability": 2,
+        "impact": 2
+      },
+      "risk_method": "project_preliminary_risk_v1",
+      "status": "CANDIDATE",
+      "description": "<p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page — covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.</p>\n\nZAP suggested solution:\n<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header.</p>",
+      "evidence": [
+        {
+          "id": 574,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 17:26:42.958867",
+          "data": {
+            "alert_name": "Content Security Policy (CSP) Header Not Set",
+            "confidence": "3",
+            "description": "<p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page — covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "",
+            "plugin_id": "10038",
+            "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP</p><p>https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html</p><p>https://www.w3.org/TR/CSP/</p><p>https://w3c.github.io/webappsec-csp/</p><p>https://web.dev/articles/csp</p><p>https://caniuse.com/#feat=contentsecuritypolicy</p><p>https://content-security-policy.com/</p>",
+            "risk_description": "Medium (High)",
+            "scanner_risk": "MEDIUM",
+            "solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001",
+            "verified": false
+          }
+        },
+        {
+          "id": 575,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 17:26:42.959076",
+          "data": {
+            "alert_name": "Content Security Policy (CSP) Header Not Set",
+            "confidence": "3",
+            "description": "<p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page — covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "",
+            "plugin_id": "10038",
+            "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP</p><p>https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html</p><p>https://www.w3.org/TR/CSP/</p><p>https://w3c.github.io/webappsec-csp/</p><p>https://web.dev/articles/csp</p><p>https://caniuse.com/#feat=contentsecuritypolicy</p><p>https://content-security-policy.com/</p>",
+            "risk_description": "Medium (High)",
+            "scanner_risk": "MEDIUM",
+            "solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/login",
+            "verified": false
+          }
+        },
+        {
+          "id": 576,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 17:26:42.959293",
+          "data": {
+            "alert_name": "Content Security Policy (CSP) Header Not Set",
+            "confidence": "3",
+            "description": "<p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page — covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "",
+            "plugin_id": "10038",
+            "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP</p><p>https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html</p><p>https://www.w3.org/TR/CSP/</p><p>https://w3c.github.io/webappsec-csp/</p><p>https://web.dev/articles/csp</p><p>https://caniuse.com/#feat=contentsecuritypolicy</p><p>https://content-security-policy.com/</p>",
+            "risk_description": "Medium (High)",
+            "scanner_risk": "MEDIUM",
+            "solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/robots.txt",
+            "verified": false
+          }
+        },
+        {
+          "id": 577,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 17:26:42.959497",
+          "data": {
+            "alert_name": "Content Security Policy (CSP) Header Not Set",
+            "confidence": "3",
+            "description": "<p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page — covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "",
+            "plugin_id": "10038",
+            "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP</p><p>https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html</p><p>https://www.w3.org/TR/CSP/</p><p>https://w3c.github.io/webappsec-csp/</p><p>https://web.dev/articles/csp</p><p>https://caniuse.com/#feat=contentsecuritypolicy</p><p>https://content-security-policy.com/</p>",
+            "risk_description": "Medium (High)",
+            "scanner_risk": "MEDIUM",
+            "solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/sitemap.xml",
+            "verified": false
+          }
+        },
+        {
+          "id": 578,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 17:26:42.959649",
+          "data": {
+            "alert_name": "Content Security Policy (CSP) Header Not Set",
+            "confidence": "3",
+            "description": "<p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page — covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.</p>",
+            "method": "POST",
+            "observed_evidence": "",
+            "parameter": "",
+            "plugin_id": "10038",
+            "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP</p><p>https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html</p><p>https://www.w3.org/TR/CSP/</p><p>https://w3c.github.io/webappsec-csp/</p><p>https://web.dev/articles/csp</p><p>https://caniuse.com/#feat=contentsecuritypolicy</p><p>https://content-security-policy.com/</p>",
+            "risk_description": "Medium (High)",
+            "scanner_risk": "MEDIUM",
+            "solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/login",
+            "verified": false
+          }
+        },
+        {
+          "id": 596,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 17:26:42.980265",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Content Security Policy (CSP) Header Not Set",
+            "observed_status": null,
+            "plugin_id": "10038",
+            "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: / (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+            "relevant_headers": {},
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "INCONCLUSIVE",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "INCONCLUSIVE",
+            "verified_vulnerability": false
+          }
+        },
+        {
+          "id": 597,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 17:26:42.980712",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Content Security Policy (CSP) Header Not Set",
+            "observed_status": null,
+            "plugin_id": "10038",
+            "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /login (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+            "relevant_headers": {},
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001/login",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "INCONCLUSIVE",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "INCONCLUSIVE",
+            "verified_vulnerability": false
+          }
+        },
+        {
+          "id": 598,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 17:26:42.981100",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Content Security Policy (CSP) Header Not Set",
+            "observed_status": null,
+            "plugin_id": "10038",
+            "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /robots.txt (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+            "relevant_headers": {},
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001/robots.txt",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "INCONCLUSIVE",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "INCONCLUSIVE",
+            "verified_vulnerability": false
+          }
+        },
+        {
+          "id": 599,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 17:26:42.981457",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Content Security Policy (CSP) Header Not Set",
+            "observed_status": null,
+            "plugin_id": "10038",
+            "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /sitemap.xml (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+            "relevant_headers": {},
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001/sitemap.xml",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "INCONCLUSIVE",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "INCONCLUSIVE",
+            "verified_vulnerability": false
+          }
+        },
+        {
+          "id": 600,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 17:26:42.981783",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Content Security Policy (CSP) Header Not Set",
+            "observed_status": null,
+            "plugin_id": "10038",
+            "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /login (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+            "relevant_headers": {},
+            "reported_method": "POST",
+            "reported_url": "http://host.docker.internal:5001/login",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "INCONCLUSIVE",
+            "verification_method": "SAFE_GET_SUBSTITUTE",
+            "verification_outcome": "INCONCLUSIVE",
+            "verified_vulnerability": false
+          }
+        }
+      ],
+      "status_history": [],
+      "latest_retest": null
+    },
+    {
+      "id": 132,
+      "title": "ZAP: Non-Storable Content [Plugin 10049]",
+      "vulnerability_type": "CACHE_CONTROL",
+      "severity": "UNASSESSED",
+      "risk_score": null,
+      "risk_severity": "UNASSESSED",
+      "risk_factors": {},
+      "risk_method": null,
+      "status": "CANDIDATE",
+      "description": "<p>The response contents are not storable by caching components such as proxy servers. If the response does not contain sensitive, personal or user-specific information, it may benefit from being stored and cached, to improve performance.</p>\n\nZAP suggested solution:\n<p>The content may be marked as storable by ensuring that the following conditions are satisfied:</p><p>The request method must be understood by the cache and defined as being cacheable (\"GET\", \"HEAD\", and \"POST\" are currently defined as cacheable)</p><p>The response status code must be understood by the cache (one of the 1XX, 2XX, 3XX, 4XX, or 5XX response classes are generally understood)</p><p>The \"no-store\" cache directive must not appear in the request or response header fields</p><p>For caching by \"shared\" caches such as \"proxy\" caches, the \"private\" response directive must not appear in the response</p><p>For caching by \"shared\" caches such as \"proxy\" caches, the \"Authorization\" header field must not appear in the request, unless the response explicitly allows it (using one of the \"must-revalidate\", \"public\", or \"s-maxage\" Cache-Control response directives)</p><p>In addition to the conditions above, at least one of the following conditions must also be satisfied by the response:</p><p>It must contain an \"Expires\" header field</p><p>It must contain a \"max-age\" response directive</p><p>For \"shared\" caches such as \"proxy\" caches, it must contain a \"s-maxage\" response directive</p><p>It must contain a \"Cache Control Extension\" that allows it to be cached</p><p>It must have a status code that is defined as cacheable by default (200, 203, 204, 206, 300, 301, 404, 405, 410, 414, 501).</p>",
+      "evidence": [
+        {
+          "id": 579,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 17:26:42.960493",
+          "data": {
+            "alert_name": "Non-Storable Content",
+            "confidence": "2",
+            "description": "<p>The response contents are not storable by caching components such as proxy servers. If the response does not contain sensitive, personal or user-specific information, it may benefit from being stored and cached, to improve performance.</p>",
+            "method": "POST",
+            "observed_evidence": "401",
+            "parameter": "",
+            "plugin_id": "10049",
+            "reference": "<p>https://datatracker.ietf.org/doc/html/rfc7234</p><p>https://datatracker.ietf.org/doc/html/rfc7231</p><p>https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html</p>",
+            "risk_description": "Informational (Medium)",
+            "scanner_risk": "INFO",
+            "solution": "<p>The content may be marked as storable by ensuring that the following conditions are satisfied:</p><p>The request method must be understood by the cache and defined as being cacheable (\"GET\", \"HEAD\", and \"POST\" are currently defined as cacheable)</p><p>The response status code must be understood by the cache (one of the 1XX, 2XX, 3XX, 4XX, or 5XX response classes are generally understood)</p><p>The \"no-store\" cache directive must not appear in the request or response header fields</p><p>For caching by \"shared\" caches such as \"proxy\" caches, the \"private\" response directive must not appear in the response</p><p>For caching by \"shared\" caches such as \"proxy\" caches, the \"Authorization\" header field must not appear in the request, unless the response explicitly allows it (using one of the \"must-revalidate\", \"public\", or \"s-maxage\" Cache-Control response directives)</p><p>In addition to the conditions above, at least one of the following conditions must also be satisfied by the response:</p><p>It must contain an \"Expires\" header field</p><p>It must contain a \"max-age\" response directive</p><p>For \"shared\" caches such as \"proxy\" caches, it must contain a \"s-maxage\" response directive</p><p>It must contain a \"Cache Control Extension\" that allows it to be cached</p><p>It must have a status code that is defined as cacheable by default (200, 203, 204, 206, 300, 301, 404, 405, 410, 414, 501).</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/login",
+            "verified": false
+          }
+        },
+        {
+          "id": 622,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 17:26:42.989074",
+          "data": {
+            "actual_request_method": null,
+            "alert_name": "Non-Storable Content",
+            "observed_status": null,
+            "plugin_id": "10049",
+            "reason": "Skipped POST: no automatic replay of credential-submission or potentially state-changing requests.",
+            "relevant_headers": {},
+            "reported_method": "POST",
+            "reported_url": "http://host.docker.internal:5001/login",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "INCONCLUSIVE",
+            "verification_method": "UNKNOWN",
+            "verification_outcome": "INCONCLUSIVE",
+            "verified_vulnerability": false
+          }
+        }
+      ],
+      "status_history": [],
+      "latest_retest": null
+    },
+    {
+      "id": 133,
+      "title": "ZAP: Storable and Cacheable Content [Plugin 10049]",
+      "vulnerability_type": "CACHE_CONTROL",
+      "severity": "UNASSESSED",
+      "risk_score": null,
+      "risk_severity": "UNASSESSED",
+      "risk_factors": {},
+      "risk_method": null,
+      "status": "CANDIDATE",
+      "description": "<p>The response contents are storable by caching components such as proxy servers, and may be retrieved directly from the cache, rather than from the origin server by the caching servers, in response to similar requests from other users. If the response data is sensitive, personal or user-specific, this may result in sensitive information being leaked. In some cases, this may even result in a user gaining complete control of the session of another user, depending on the configuration of the caching components in use in their environment. This is primarily an issue where \"shared\" caching servers such as \"proxy\" caches are configured on the local network. This configuration is typically found in corporate or educational environments, for instance.</p>\n\nZAP suggested solution:\n<p>Validate that the response does not contain sensitive, personal or user-specific information. If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:</p><p>Cache-Control: no-cache, no-store, must-revalidate, private</p><p>Pragma: no-cache</p><p>Expires: 0</p><p>This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request.</p>",
+      "evidence": [
+        {
+          "id": 580,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 17:26:42.961637",
+          "data": {
+            "alert_name": "Storable and Cacheable Content",
+            "confidence": "2",
+            "description": "<p>The response contents are storable by caching components such as proxy servers, and may be retrieved directly from the cache, rather than from the origin server by the caching servers, in response to similar requests from other users. If the response data is sensitive, personal or user-specific, this may result in sensitive information being leaked. In some cases, this may even result in a user gaining complete control of the session of another user, depending on the configuration of the caching components in use in their environment. This is primarily an issue where \"shared\" caching servers such as \"proxy\" caches are configured on the local network. This configuration is typically found in corporate or educational environments, for instance.</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "",
+            "plugin_id": "10049",
+            "reference": "<p>https://datatracker.ietf.org/doc/html/rfc7234</p><p>https://datatracker.ietf.org/doc/html/rfc7231</p><p>https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html</p>",
+            "risk_description": "Informational (Medium)",
+            "scanner_risk": "INFO",
+            "solution": "<p>Validate that the response does not contain sensitive, personal or user-specific information. If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:</p><p>Cache-Control: no-cache, no-store, must-revalidate, private</p><p>Pragma: no-cache</p><p>Expires: 0</p><p>This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001",
+            "verified": false
+          }
+        },
+        {
+          "id": 581,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 17:26:42.961874",
+          "data": {
+            "alert_name": "Storable and Cacheable Content",
+            "confidence": "2",
+            "description": "<p>The response contents are storable by caching components such as proxy servers, and may be retrieved directly from the cache, rather than from the origin server by the caching servers, in response to similar requests from other users. If the response data is sensitive, personal or user-specific, this may result in sensitive information being leaked. In some cases, this may even result in a user gaining complete control of the session of another user, depending on the configuration of the caching components in use in their environment. This is primarily an issue where \"shared\" caching servers such as \"proxy\" caches are configured on the local network. This configuration is typically found in corporate or educational environments, for instance.</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "",
+            "plugin_id": "10049",
+            "reference": "<p>https://datatracker.ietf.org/doc/html/rfc7234</p><p>https://datatracker.ietf.org/doc/html/rfc7231</p><p>https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html</p>",
+            "risk_description": "Informational (Medium)",
+            "scanner_risk": "INFO",
+            "solution": "<p>Validate that the response does not contain sensitive, personal or user-specific information. If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:</p><p>Cache-Control: no-cache, no-store, must-revalidate, private</p><p>Pragma: no-cache</p><p>Expires: 0</p><p>This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/login",
+            "verified": false
+          }
+        },
+        {
+          "id": 582,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 17:26:42.962083",
+          "data": {
+            "alert_name": "Storable and Cacheable Content",
+            "confidence": "2",
+            "description": "<p>The response contents are storable by caching components such as proxy servers, and may be retrieved directly from the cache, rather than from the origin server by the caching servers, in response to similar requests from other users. If the response data is sensitive, personal or user-specific, this may result in sensitive information being leaked. In some cases, this may even result in a user gaining complete control of the session of another user, depending on the configuration of the caching components in use in their environment. This is primarily an issue where \"shared\" caching servers such as \"proxy\" caches are configured on the local network. This configuration is typically found in corporate or educational environments, for instance.</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "",
+            "plugin_id": "10049",
+            "reference": "<p>https://datatracker.ietf.org/doc/html/rfc7234</p><p>https://datatracker.ietf.org/doc/html/rfc7231</p><p>https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html</p>",
+            "risk_description": "Informational (Medium)",
+            "scanner_risk": "INFO",
+            "solution": "<p>Validate that the response does not contain sensitive, personal or user-specific information. If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:</p><p>Cache-Control: no-cache, no-store, must-revalidate, private</p><p>Pragma: no-cache</p><p>Expires: 0</p><p>This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/robots.txt",
+            "verified": false
+          }
+        },
+        {
+          "id": 583,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 17:26:42.962253",
+          "data": {
+            "alert_name": "Storable and Cacheable Content",
+            "confidence": "2",
+            "description": "<p>The response contents are storable by caching components such as proxy servers, and may be retrieved directly from the cache, rather than from the origin server by the caching servers, in response to similar requests from other users. If the response data is sensitive, personal or user-specific, this may result in sensitive information being leaked. In some cases, this may even result in a user gaining complete control of the session of another user, depending on the configuration of the caching components in use in their environment. This is primarily an issue where \"shared\" caching servers such as \"proxy\" caches are configured on the local network. This configuration is typically found in corporate or educational environments, for instance.</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "",
+            "plugin_id": "10049",
+            "reference": "<p>https://datatracker.ietf.org/doc/html/rfc7234</p><p>https://datatracker.ietf.org/doc/html/rfc7231</p><p>https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html</p>",
+            "risk_description": "Informational (Medium)",
+            "scanner_risk": "INFO",
+            "solution": "<p>Validate that the response does not contain sensitive, personal or user-specific information. If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:</p><p>Cache-Control: no-cache, no-store, must-revalidate, private</p><p>Pragma: no-cache</p><p>Expires: 0</p><p>This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/sitemap.xml",
+            "verified": false
+          }
+        },
+        {
+          "id": 623,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 17:26:42.989432",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Storable and Cacheable Content",
+            "observed_status": null,
+            "plugin_id": "10049",
+            "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: / (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+            "relevant_headers": {},
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "INCONCLUSIVE",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "INCONCLUSIVE",
+            "verified_vulnerability": false
+          }
+        },
+        {
+          "id": 624,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 17:26:42.989787",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Storable and Cacheable Content",
+            "observed_status": null,
+            "plugin_id": "10049",
+            "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /login (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+            "relevant_headers": {},
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001/login",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "INCONCLUSIVE",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "INCONCLUSIVE",
+            "verified_vulnerability": false
+          }
+        },
+        {
+          "id": 625,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 17:26:42.990101",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Storable and Cacheable Content",
+            "observed_status": null,
+            "plugin_id": "10049",
+            "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /robots.txt (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+            "relevant_headers": {},
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001/robots.txt",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "INCONCLUSIVE",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "INCONCLUSIVE",
+            "verified_vulnerability": false
+          }
+        },
+        {
+          "id": 626,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 17:26:42.990365",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Storable and Cacheable Content",
+            "observed_status": null,
+            "plugin_id": "10049",
+            "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /sitemap.xml (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+            "relevant_headers": {},
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001/sitemap.xml",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "INCONCLUSIVE",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "INCONCLUSIVE",
+            "verified_vulnerability": false
+          }
+        }
+      ],
+      "status_history": [],
+      "latest_retest": null
+    },
+    {
+      "id": 134,
+      "title": "ZAP: Permissions Policy Header Not Set [Plugin 10063]",
+      "vulnerability_type": "SECURITY_MISCONFIGURATION",
+      "severity": "UNASSESSED",
+      "risk_score": 25.0,
+      "risk_severity": "LOW",
+      "risk_factors": {
+        "confidence": 2,
+        "exploitability": 2,
+        "impact": 2
+      },
+      "risk_method": "project_preliminary_risk_v1",
+      "status": "CANDIDATE",
+      "description": "<p>Permissions Policy Header is an added layer of security that helps to restrict from unauthorized access or usage of browser/client features by web resources. This policy ensures the user privacy by limiting or specifying the features of the browsers can be used by the web resources. Permissions Policy provides a set of standard HTTP headers that allow website owners to limit which features of browsers can be used by the page such as camera, microphone, location, full screen etc.</p>\n\nZAP suggested solution:\n<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Permissions-Policy header.</p>",
+      "evidence": [
+        {
+          "id": 584,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 17:26:42.963400",
+          "data": {
+            "alert_name": "Permissions Policy Header Not Set",
+            "confidence": "2",
+            "description": "<p>Permissions Policy Header is an added layer of security that helps to restrict from unauthorized access or usage of browser/client features by web resources. This policy ensures the user privacy by limiting or specifying the features of the browsers can be used by the web resources. Permissions Policy provides a set of standard HTTP headers that allow website owners to limit which features of browsers can be used by the page such as camera, microphone, location, full screen etc.</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "",
+            "plugin_id": "10063",
+            "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Permissions-Policy</p><p>https://developer.chrome.com/blog/feature-policy/</p><p>https://scotthelme.co.uk/a-new-security-header-feature-policy/</p><p>https://w3c.github.io/webappsec-feature-policy/</p><p>https://www.smashingmagazine.com/2018/12/feature-policy/</p>",
+            "risk_description": "Low (Medium)",
+            "scanner_risk": "LOW",
+            "solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Permissions-Policy header.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001",
+            "verified": false
+          }
+        },
+        {
+          "id": 585,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 17:26:42.963645",
+          "data": {
+            "alert_name": "Permissions Policy Header Not Set",
+            "confidence": "2",
+            "description": "<p>Permissions Policy Header is an added layer of security that helps to restrict from unauthorized access or usage of browser/client features by web resources. This policy ensures the user privacy by limiting or specifying the features of the browsers can be used by the web resources. Permissions Policy provides a set of standard HTTP headers that allow website owners to limit which features of browsers can be used by the page such as camera, microphone, location, full screen etc.</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "",
+            "plugin_id": "10063",
+            "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Permissions-Policy</p><p>https://developer.chrome.com/blog/feature-policy/</p><p>https://scotthelme.co.uk/a-new-security-header-feature-policy/</p><p>https://w3c.github.io/webappsec-feature-policy/</p><p>https://www.smashingmagazine.com/2018/12/feature-policy/</p>",
+            "risk_description": "Low (Medium)",
+            "scanner_risk": "LOW",
+            "solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Permissions-Policy header.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/login",
+            "verified": false
+          }
+        },
+        {
+          "id": 586,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 17:26:42.963848",
+          "data": {
+            "alert_name": "Permissions Policy Header Not Set",
+            "confidence": "2",
+            "description": "<p>Permissions Policy Header is an added layer of security that helps to restrict from unauthorized access or usage of browser/client features by web resources. This policy ensures the user privacy by limiting or specifying the features of the browsers can be used by the web resources. Permissions Policy provides a set of standard HTTP headers that allow website owners to limit which features of browsers can be used by the page such as camera, microphone, location, full screen etc.</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "",
+            "plugin_id": "10063",
+            "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Permissions-Policy</p><p>https://developer.chrome.com/blog/feature-policy/</p><p>https://scotthelme.co.uk/a-new-security-header-feature-policy/</p><p>https://w3c.github.io/webappsec-feature-policy/</p><p>https://www.smashingmagazine.com/2018/12/feature-policy/</p>",
+            "risk_description": "Low (Medium)",
+            "scanner_risk": "LOW",
+            "solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Permissions-Policy header.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/robots.txt",
+            "verified": false
+          }
+        },
+        {
+          "id": 587,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 17:26:42.964046",
+          "data": {
+            "alert_name": "Permissions Policy Header Not Set",
+            "confidence": "2",
+            "description": "<p>Permissions Policy Header is an added layer of security that helps to restrict from unauthorized access or usage of browser/client features by web resources. This policy ensures the user privacy by limiting or specifying the features of the browsers can be used by the web resources. Permissions Policy provides a set of standard HTTP headers that allow website owners to limit which features of browsers can be used by the page such as camera, microphone, location, full screen etc.</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "",
+            "plugin_id": "10063",
+            "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Permissions-Policy</p><p>https://developer.chrome.com/blog/feature-policy/</p><p>https://scotthelme.co.uk/a-new-security-header-feature-policy/</p><p>https://w3c.github.io/webappsec-feature-policy/</p><p>https://www.smashingmagazine.com/2018/12/feature-policy/</p>",
+            "risk_description": "Low (Medium)",
+            "scanner_risk": "LOW",
+            "solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Permissions-Policy header.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/sitemap.xml",
+            "verified": false
+          }
+        },
+        {
+          "id": 588,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 17:26:42.964193",
+          "data": {
+            "alert_name": "Permissions Policy Header Not Set",
+            "confidence": "2",
+            "description": "<p>Permissions Policy Header is an added layer of security that helps to restrict from unauthorized access or usage of browser/client features by web resources. This policy ensures the user privacy by limiting or specifying the features of the browsers can be used by the web resources. Permissions Policy provides a set of standard HTTP headers that allow website owners to limit which features of browsers can be used by the page such as camera, microphone, location, full screen etc.</p>",
+            "method": "POST",
+            "observed_evidence": "",
+            "parameter": "",
+            "plugin_id": "10063",
+            "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Permissions-Policy</p><p>https://developer.chrome.com/blog/feature-policy/</p><p>https://scotthelme.co.uk/a-new-security-header-feature-policy/</p><p>https://w3c.github.io/webappsec-feature-policy/</p><p>https://www.smashingmagazine.com/2018/12/feature-policy/</p>",
+            "risk_description": "Low (Medium)",
+            "scanner_risk": "LOW",
+            "solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Permissions-Policy header.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/login",
+            "verified": false
+          }
+        },
+        {
+          "id": 609,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 17:26:42.984814",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Permissions Policy Header Not Set",
+            "observed_status": null,
+            "plugin_id": "10063",
+            "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: / (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+            "relevant_headers": {},
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "INCONCLUSIVE",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "INCONCLUSIVE",
+            "verified_vulnerability": false
+          }
+        },
+        {
+          "id": 610,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 17:26:42.985128",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Permissions Policy Header Not Set",
+            "observed_status": null,
+            "plugin_id": "10063",
+            "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /login (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+            "relevant_headers": {},
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001/login",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "INCONCLUSIVE",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "INCONCLUSIVE",
+            "verified_vulnerability": false
+          }
+        },
+        {
+          "id": 611,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 17:26:42.985465",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Permissions Policy Header Not Set",
+            "observed_status": null,
+            "plugin_id": "10063",
+            "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /robots.txt (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+            "relevant_headers": {},
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001/robots.txt",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "INCONCLUSIVE",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "INCONCLUSIVE",
+            "verified_vulnerability": false
+          }
+        },
+        {
+          "id": 612,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 17:26:42.985815",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Permissions Policy Header Not Set",
+            "observed_status": null,
+            "plugin_id": "10063",
+            "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /sitemap.xml (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+            "relevant_headers": {},
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001/sitemap.xml",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "INCONCLUSIVE",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "INCONCLUSIVE",
+            "verified_vulnerability": false
+          }
+        },
+        {
+          "id": 613,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 17:26:42.986186",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Permissions Policy Header Not Set",
+            "observed_status": null,
+            "plugin_id": "10063",
+            "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /login (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+            "relevant_headers": {},
+            "reported_method": "POST",
+            "reported_url": "http://host.docker.internal:5001/login",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "INCONCLUSIVE",
+            "verification_method": "SAFE_GET_SUBSTITUTE",
+            "verification_outcome": "INCONCLUSIVE",
+            "verified_vulnerability": false
+          }
+        }
+      ],
+      "status_history": [],
+      "latest_retest": null
+    },
+    {
+      "id": 135,
+      "title": "ZAP: Authentication Request Identified [Plugin 10111]",
+      "vulnerability_type": "AUTHENTICATION_INFORMATION",
+      "severity": "UNASSESSED",
+      "risk_score": null,
+      "risk_severity": "UNASSESSED",
+      "risk_factors": {},
+      "risk_method": null,
+      "status": "CANDIDATE",
+      "description": "<p>The given request has been identified as an authentication request. The 'Other Info' field contains a set of key=value lines which identify any relevant fields. If the request is in a context which has an Authentication Method set to \"Auto-Detect\" then this rule will change the authentication to match the request identified.</p>\n\nZAP suggested solution:\n<p>This is an informational alert rather than a vulnerability and so there is nothing to fix.</p>",
+      "evidence": [
+        {
+          "id": 589,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 17:26:42.965249",
+          "data": {
+            "alert_name": "Authentication Request Identified",
+            "confidence": "3",
+            "description": "<p>The given request has been identified as an authentication request. The 'Other Info' field contains a set of key=value lines which identify any relevant fields. If the request is in a context which has an Authentication Method set to \"Auto-Detect\" then this rule will change the authentication to match the request identified.</p>",
+            "method": "POST",
+            "observed_evidence": "password",
+            "parameter": "username",
+            "plugin_id": "10111",
+            "reference": "<p>https://www.zaproxy.org/docs/desktop/addons/authentication-helper/auth-req-id/</p>",
+            "risk_description": "Informational (High)",
+            "scanner_risk": "INFO",
+            "solution": "<p>This is an informational alert rather than a vulnerability and so there is nothing to fix.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/login",
+            "verified": false
+          }
+        },
+        {
+          "id": 621,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 17:26:42.988718",
+          "data": {
+            "actual_request_method": null,
+            "alert_name": "Authentication Request Identified",
+            "observed_status": null,
+            "plugin_id": "10111",
+            "reason": "Skipped POST: no automatic replay of credential-submission or potentially state-changing requests.",
+            "relevant_headers": {},
+            "reported_method": "POST",
+            "reported_url": "http://host.docker.internal:5001/login",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "INFORMATIONAL",
+            "verification_method": "UNKNOWN",
+            "verification_outcome": "INCONCLUSIVE",
+            "verified_vulnerability": false
+          }
+        }
+      ],
+      "status_history": [],
+      "latest_retest": null
+    },
+    {
+      "id": 136,
+      "title": "ZAP: Cross-Origin-Embedder-Policy Header Missing or Invalid [Plugin 90004]",
+      "vulnerability_type": "SECURITY_MISCONFIGURATION",
+      "severity": "UNASSESSED",
+      "risk_score": 25.0,
+      "risk_severity": "LOW",
+      "risk_factors": {
+        "confidence": 2,
+        "exploitability": 2,
+        "impact": 2
+      },
+      "risk_method": "project_preliminary_risk_v1",
+      "status": "CANDIDATE",
+      "description": "<p>Cross-Origin-Embedder-Policy header is a response header that prevents a document from loading any cross-origin resources that don't explicitly grant the document permission (using CORP or CORS).</p>\n\nZAP suggested solution:\n<p>Ensure that the application/web server sets the Cross-Origin-Embedder-Policy header appropriately, and that it sets the Cross-Origin-Embedder-Policy header to 'require-corp' for documents.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that supports the Cross-Origin-Embedder-Policy header (https://caniuse.com/mdn-http_headers_cross-origin-embedder-policy).</p>",
+      "evidence": [
+        {
+          "id": 590,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 17:26:42.966183",
+          "data": {
+            "alert_name": "Cross-Origin-Embedder-Policy Header Missing or Invalid",
+            "confidence": "2",
+            "description": "<p>Cross-Origin-Embedder-Policy header is a response header that prevents a document from loading any cross-origin resources that don't explicitly grant the document permission (using CORP or CORS).</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "Cross-Origin-Embedder-Policy",
+            "plugin_id": "90004",
+            "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cross-Origin-Embedder-Policy</p>",
+            "risk_description": "Low (Medium)",
+            "scanner_risk": "LOW",
+            "solution": "<p>Ensure that the application/web server sets the Cross-Origin-Embedder-Policy header appropriately, and that it sets the Cross-Origin-Embedder-Policy header to 'require-corp' for documents.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that supports the Cross-Origin-Embedder-Policy header (https://caniuse.com/mdn-http_headers_cross-origin-embedder-policy).</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001",
+            "verified": false
+          }
+        },
+        {
+          "id": 591,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 17:26:42.966345",
+          "data": {
+            "alert_name": "Cross-Origin-Embedder-Policy Header Missing or Invalid",
+            "confidence": "2",
+            "description": "<p>Cross-Origin-Embedder-Policy header is a response header that prevents a document from loading any cross-origin resources that don't explicitly grant the document permission (using CORP or CORS).</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "Cross-Origin-Embedder-Policy",
+            "plugin_id": "90004",
+            "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cross-Origin-Embedder-Policy</p>",
+            "risk_description": "Low (Medium)",
+            "scanner_risk": "LOW",
+            "solution": "<p>Ensure that the application/web server sets the Cross-Origin-Embedder-Policy header appropriately, and that it sets the Cross-Origin-Embedder-Policy header to 'require-corp' for documents.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that supports the Cross-Origin-Embedder-Policy header (https://caniuse.com/mdn-http_headers_cross-origin-embedder-policy).</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/login",
+            "verified": false
+          }
+        },
+        {
+          "id": 603,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 17:26:42.982937",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Cross-Origin-Embedder-Policy Header Missing or Invalid",
+            "observed_status": null,
+            "plugin_id": "90004",
+            "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: / (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+            "relevant_headers": {},
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "INCONCLUSIVE",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "INCONCLUSIVE",
+            "verified_vulnerability": false
+          }
+        },
+        {
+          "id": 604,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 17:26:42.983252",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Cross-Origin-Embedder-Policy Header Missing or Invalid",
+            "observed_status": null,
+            "plugin_id": "90004",
+            "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /login (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+            "relevant_headers": {},
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001/login",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "INCONCLUSIVE",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "INCONCLUSIVE",
+            "verified_vulnerability": false
+          }
+        }
+      ],
+      "status_history": [],
+      "latest_retest": null
+    },
+    {
+      "id": 137,
+      "title": "ZAP: Cross-Origin-Opener-Policy Header Missing or Invalid [Plugin 90004]",
+      "vulnerability_type": "SECURITY_MISCONFIGURATION",
+      "severity": "UNASSESSED",
+      "risk_score": 25.0,
+      "risk_severity": "LOW",
+      "risk_factors": {
+        "confidence": 2,
+        "exploitability": 2,
+        "impact": 2
+      },
+      "risk_method": "project_preliminary_risk_v1",
+      "status": "CANDIDATE",
+      "description": "<p>Cross-Origin-Opener-Policy header is a response header that allows a site to control if others included documents share the same browsing context. Sharing the same browsing context with untrusted documents might lead to data leak.</p>\n\nZAP suggested solution:\n<p>Ensure that the application/web server sets the Cross-Origin-Opener-Policy header appropriately, and that it sets the Cross-Origin-Opener-Policy header to 'same-origin' for documents.</p><p>'same-origin-allow-popups' is considered as less secured and should be avoided.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that supports the Cross-Origin-Opener-Policy header (https://caniuse.com/mdn-http_headers_cross-origin-opener-policy).</p>",
+      "evidence": [
+        {
+          "id": 592,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 17:26:42.967244",
+          "data": {
+            "alert_name": "Cross-Origin-Opener-Policy Header Missing or Invalid",
+            "confidence": "2",
+            "description": "<p>Cross-Origin-Opener-Policy header is a response header that allows a site to control if others included documents share the same browsing context. Sharing the same browsing context with untrusted documents might lead to data leak.</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "Cross-Origin-Opener-Policy",
+            "plugin_id": "90004",
+            "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cross-Origin-Opener-Policy</p>",
+            "risk_description": "Low (Medium)",
+            "scanner_risk": "LOW",
+            "solution": "<p>Ensure that the application/web server sets the Cross-Origin-Opener-Policy header appropriately, and that it sets the Cross-Origin-Opener-Policy header to 'same-origin' for documents.</p><p>'same-origin-allow-popups' is considered as less secured and should be avoided.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that supports the Cross-Origin-Opener-Policy header (https://caniuse.com/mdn-http_headers_cross-origin-opener-policy).</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001",
+            "verified": false
+          }
+        },
+        {
+          "id": 593,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 17:26:42.967405",
+          "data": {
+            "alert_name": "Cross-Origin-Opener-Policy Header Missing or Invalid",
+            "confidence": "2",
+            "description": "<p>Cross-Origin-Opener-Policy header is a response header that allows a site to control if others included documents share the same browsing context. Sharing the same browsing context with untrusted documents might lead to data leak.</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "Cross-Origin-Opener-Policy",
+            "plugin_id": "90004",
+            "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cross-Origin-Opener-Policy</p>",
+            "risk_description": "Low (Medium)",
+            "scanner_risk": "LOW",
+            "solution": "<p>Ensure that the application/web server sets the Cross-Origin-Opener-Policy header appropriately, and that it sets the Cross-Origin-Opener-Policy header to 'same-origin' for documents.</p><p>'same-origin-allow-popups' is considered as less secured and should be avoided.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that supports the Cross-Origin-Opener-Policy header (https://caniuse.com/mdn-http_headers_cross-origin-opener-policy).</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/login",
+            "verified": false
+          }
+        },
+        {
+          "id": 605,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 17:26:42.983564",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Cross-Origin-Opener-Policy Header Missing or Invalid",
+            "observed_status": null,
+            "plugin_id": "90004",
+            "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: / (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+            "relevant_headers": {},
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "INCONCLUSIVE",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "INCONCLUSIVE",
+            "verified_vulnerability": false
+          }
+        },
+        {
+          "id": 606,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 17:26:42.983872",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Cross-Origin-Opener-Policy Header Missing or Invalid",
+            "observed_status": null,
+            "plugin_id": "90004",
+            "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /login (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+            "relevant_headers": {},
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001/login",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "INCONCLUSIVE",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "INCONCLUSIVE",
+            "verified_vulnerability": false
+          }
+        }
+      ],
+      "status_history": [],
+      "latest_retest": null
+    },
+    {
+      "id": 138,
+      "title": "ZAP: Cross-Origin-Resource-Policy Header Missing or Invalid [Plugin 90004]",
+      "vulnerability_type": "SECURITY_MISCONFIGURATION",
+      "severity": "UNASSESSED",
+      "risk_score": 25.0,
+      "risk_severity": "LOW",
+      "risk_factors": {
+        "confidence": 2,
+        "exploitability": 2,
+        "impact": 2
+      },
+      "risk_method": "project_preliminary_risk_v1",
+      "status": "CANDIDATE",
+      "description": "<p>Cross-Origin-Resource-Policy header is an opt-in header designed to counter side-channels attacks like Spectre. Resource should be specifically set as shareable amongst different origins.</p>\n\nZAP suggested solution:\n<p>Ensure that the application/web server sets the Cross-Origin-Resource-Policy header appropriately, and that it sets the Cross-Origin-Resource-Policy header to 'same-origin' for all web pages.</p><p>'same-site' is considered as less secured and should be avoided.</p><p>If resources must be shared, set the header to 'cross-origin'.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that supports the Cross-Origin-Resource-Policy header (https://caniuse.com/mdn-http_headers_cross-origin-resource-policy).</p>",
+      "evidence": [
+        {
+          "id": 594,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 17:26:42.968342",
+          "data": {
+            "alert_name": "Cross-Origin-Resource-Policy Header Missing or Invalid",
+            "confidence": "2",
+            "description": "<p>Cross-Origin-Resource-Policy header is an opt-in header designed to counter side-channels attacks like Spectre. Resource should be specifically set as shareable amongst different origins.</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "Cross-Origin-Resource-Policy",
+            "plugin_id": "90004",
+            "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cross-Origin-Embedder-Policy</p>",
+            "risk_description": "Low (Medium)",
+            "scanner_risk": "LOW",
+            "solution": "<p>Ensure that the application/web server sets the Cross-Origin-Resource-Policy header appropriately, and that it sets the Cross-Origin-Resource-Policy header to 'same-origin' for all web pages.</p><p>'same-site' is considered as less secured and should be avoided.</p><p>If resources must be shared, set the header to 'cross-origin'.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that supports the Cross-Origin-Resource-Policy header (https://caniuse.com/mdn-http_headers_cross-origin-resource-policy).</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001",
+            "verified": false
+          }
+        },
+        {
+          "id": 595,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 17:26:42.968502",
+          "data": {
+            "alert_name": "Cross-Origin-Resource-Policy Header Missing or Invalid",
+            "confidence": "2",
+            "description": "<p>Cross-Origin-Resource-Policy header is an opt-in header designed to counter side-channels attacks like Spectre. Resource should be specifically set as shareable amongst different origins.</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "Cross-Origin-Resource-Policy",
+            "plugin_id": "90004",
+            "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cross-Origin-Embedder-Policy</p>",
+            "risk_description": "Low (Medium)",
+            "scanner_risk": "LOW",
+            "solution": "<p>Ensure that the application/web server sets the Cross-Origin-Resource-Policy header appropriately, and that it sets the Cross-Origin-Resource-Policy header to 'same-origin' for all web pages.</p><p>'same-site' is considered as less secured and should be avoided.</p><p>If resources must be shared, set the header to 'cross-origin'.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that supports the Cross-Origin-Resource-Policy header (https://caniuse.com/mdn-http_headers_cross-origin-resource-policy).</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/login",
+            "verified": false
+          }
+        },
+        {
+          "id": 607,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 17:26:42.984182",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Cross-Origin-Resource-Policy Header Missing or Invalid",
+            "observed_status": null,
+            "plugin_id": "90004",
+            "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: / (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+            "relevant_headers": {},
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "INCONCLUSIVE",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "INCONCLUSIVE",
+            "verified_vulnerability": false
+          }
+        },
+        {
+          "id": 608,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 17:26:42.984496",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Cross-Origin-Resource-Policy Header Missing or Invalid",
+            "observed_status": null,
+            "plugin_id": "90004",
+            "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /login (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+            "relevant_headers": {},
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001/login",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "INCONCLUSIVE",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "INCONCLUSIVE",
+            "verified_vulnerability": false
+          }
+        }
+      ],
+      "status_history": [],
+      "latest_retest": null
+    }
+  ],
+  "attack_paths": [],
+  "correlation_analysis": {
+    "mode": "read-only correlation",
+    "assessment_id": 9,
+    "findings_processed": 11,
+    "relationships": [
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 128,
+        "source_evidence_id": 565,
+        "related_evidence_id": 601,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 128,
+        "source_evidence_id": 566,
+        "related_evidence_id": 602,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SHARED_ENDPOINT_GROUP",
+        "endpoint": "/",
+        "finding_ids": [
+          128,
+          129,
+          130,
+          131,
+          133,
+          134,
+          136,
+          137,
+          138
+        ],
+        "evidence_ids_by_finding": {
+          "128": [
+            565
+          ],
+          "129": [
+            567
+          ],
+          "130": [
+            569
+          ],
+          "131": [
+            574
+          ],
+          "133": [
+            580
+          ],
+          "134": [
+            584
+          ],
+          "136": [
+            590
+          ],
+          "137": [
+            592
+          ],
+          "138": [
+            594
+          ]
+        },
+        "match_basis": "multiple findings have evidence for this endpoint",
+        "verified_relationship": false,
+        "note": "Endpoint-level grouping only; does not establish a common root cause, exploitability, or an attack path."
+      },
+      {
+        "type": "SHARED_ENDPOINT_GROUP",
+        "endpoint": "/login",
+        "finding_ids": [
+          128,
+          129,
+          130,
+          131,
+          132,
+          133,
+          134,
+          135,
+          136,
+          137,
+          138
+        ],
+        "evidence_ids_by_finding": {
+          "128": [
+            566
+          ],
+          "129": [
+            568
+          ],
+          "130": [
+            570,
+            573
+          ],
+          "131": [
+            575,
+            578
+          ],
+          "132": [
+            579
+          ],
+          "133": [
+            581
+          ],
+          "134": [
+            585,
+            588
+          ],
+          "135": [
+            589
+          ],
+          "136": [
+            591
+          ],
+          "137": [
+            593
+          ],
+          "138": [
+            595
+          ]
+        },
+        "match_basis": "multiple findings have evidence for this endpoint",
+        "verified_relationship": false,
+        "note": "Endpoint-level grouping only; does not establish a common root cause, exploitability, or an attack path."
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 129,
+        "source_evidence_id": 567,
+        "related_evidence_id": 619,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 129,
+        "source_evidence_id": 568,
+        "related_evidence_id": 620,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 130,
+        "source_evidence_id": 569,
+        "related_evidence_id": 614,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 130,
+        "source_evidence_id": 570,
+        "related_evidence_id": 615,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 130,
+        "source_evidence_id": 571,
+        "related_evidence_id": 616,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 130,
+        "source_evidence_id": 572,
+        "related_evidence_id": 617,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 130,
+        "source_evidence_id": 573,
+        "related_evidence_id": 618,
+        "match_basis": "same URL; GET substitute for POST; original POST response not verified"
+      },
+      {
+        "type": "SHARED_ENDPOINT_GROUP",
+        "endpoint": "/robots.txt",
+        "finding_ids": [
+          130,
+          131,
+          133,
+          134
+        ],
+        "evidence_ids_by_finding": {
+          "130": [
+            571
+          ],
+          "131": [
+            576
+          ],
+          "133": [
+            582
+          ],
+          "134": [
+            586
+          ]
+        },
+        "match_basis": "multiple findings have evidence for this endpoint",
+        "verified_relationship": false,
+        "note": "Endpoint-level grouping only; does not establish a common root cause, exploitability, or an attack path."
+      },
+      {
+        "type": "SHARED_ENDPOINT_GROUP",
+        "endpoint": "/sitemap.xml",
+        "finding_ids": [
+          130,
+          131,
+          133,
+          134
+        ],
+        "evidence_ids_by_finding": {
+          "130": [
+            572
+          ],
+          "131": [
+            577
+          ],
+          "133": [
+            583
+          ],
+          "134": [
+            587
+          ]
+        },
+        "match_basis": "multiple findings have evidence for this endpoint",
+        "verified_relationship": false,
+        "note": "Endpoint-level grouping only; does not establish a common root cause, exploitability, or an attack path."
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 131,
+        "source_evidence_id": 574,
+        "related_evidence_id": 596,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 131,
+        "source_evidence_id": 575,
+        "related_evidence_id": 597,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 131,
+        "source_evidence_id": 576,
+        "related_evidence_id": 598,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 131,
+        "source_evidence_id": 577,
+        "related_evidence_id": 599,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 131,
+        "source_evidence_id": 578,
+        "related_evidence_id": 600,
+        "match_basis": "same URL; GET substitute for POST; original POST response not verified"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 132,
+        "source_evidence_id": 579,
+        "related_evidence_id": 622,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 133,
+        "source_evidence_id": 580,
+        "related_evidence_id": 623,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 133,
+        "source_evidence_id": 581,
+        "related_evidence_id": 624,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 133,
+        "source_evidence_id": 582,
+        "related_evidence_id": 625,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 133,
+        "source_evidence_id": 583,
+        "related_evidence_id": 626,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 134,
+        "source_evidence_id": 584,
+        "related_evidence_id": 609,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 134,
+        "source_evidence_id": 585,
+        "related_evidence_id": 610,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 134,
+        "source_evidence_id": 586,
+        "related_evidence_id": 611,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 134,
+        "source_evidence_id": 587,
+        "related_evidence_id": 612,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 134,
+        "source_evidence_id": 588,
+        "related_evidence_id": 613,
+        "match_basis": "same URL; GET substitute for POST; original POST response not verified"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 135,
+        "source_evidence_id": 589,
+        "related_evidence_id": 621,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 136,
+        "source_evidence_id": 590,
+        "related_evidence_id": 603,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 136,
+        "source_evidence_id": 591,
+        "related_evidence_id": 604,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 137,
+        "source_evidence_id": 592,
+        "related_evidence_id": 605,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 137,
+        "source_evidence_id": 593,
+        "related_evidence_id": 606,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 138,
+        "source_evidence_id": 594,
+        "related_evidence_id": 607,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 138,
+        "source_evidence_id": 595,
+        "related_evidence_id": 608,
+        "match_basis": "same plugin, URL and method"
+      }
+    ],
+    "notes": [
+      "Relationships are candidates, not proof of exploitability.",
+      "No findings or evidence records are merged or deleted.",
+      "Safe GET substitutes do not prove the original POST response."
+    ]
+  },
+  "zap_live_verification": {
+    "assessment_id": 9,
+    "generated_at": "2026-11-03T17:26:42.978140+00:00",
+    "target": "http://localhost:5001",
+    "mode": "read-only live-response verification",
+    "results": [
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Missing Anti-clickjacking Header",
+        "observed_status": null,
+        "plugin_id": "10020",
+        "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: / (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+        "relevant_headers": {},
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "INCONCLUSIVE",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "INCONCLUSIVE",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Missing Anti-clickjacking Header",
+        "observed_status": null,
+        "plugin_id": "10020",
+        "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /login (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+        "relevant_headers": {},
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001/login",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "INCONCLUSIVE",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "INCONCLUSIVE",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "X-Content-Type-Options Header Missing",
+        "observed_status": null,
+        "plugin_id": "10021",
+        "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: / (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+        "relevant_headers": {},
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "INCONCLUSIVE",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "INCONCLUSIVE",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "X-Content-Type-Options Header Missing",
+        "observed_status": null,
+        "plugin_id": "10021",
+        "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /login (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+        "relevant_headers": {},
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001/login",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "INCONCLUSIVE",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "INCONCLUSIVE",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+        "observed_status": null,
+        "plugin_id": "10036",
+        "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: / (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+        "relevant_headers": {},
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "INCONCLUSIVE",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "INCONCLUSIVE",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+        "observed_status": null,
+        "plugin_id": "10036",
+        "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /login (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+        "relevant_headers": {},
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001/login",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "INCONCLUSIVE",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "INCONCLUSIVE",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+        "observed_status": null,
+        "plugin_id": "10036",
+        "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /robots.txt (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+        "relevant_headers": {},
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001/robots.txt",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "INCONCLUSIVE",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "INCONCLUSIVE",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+        "observed_status": null,
+        "plugin_id": "10036",
+        "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /sitemap.xml (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+        "relevant_headers": {},
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001/sitemap.xml",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "INCONCLUSIVE",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "INCONCLUSIVE",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+        "observed_status": null,
+        "plugin_id": "10036",
+        "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /login (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+        "relevant_headers": {},
+        "reported_method": "POST",
+        "reported_url": "http://host.docker.internal:5001/login",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "INCONCLUSIVE",
+        "verification_method": "SAFE_GET_SUBSTITUTE",
+        "verification_outcome": "INCONCLUSIVE",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Content Security Policy (CSP) Header Not Set",
+        "observed_status": null,
+        "plugin_id": "10038",
+        "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: / (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+        "relevant_headers": {},
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "INCONCLUSIVE",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "INCONCLUSIVE",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Content Security Policy (CSP) Header Not Set",
+        "observed_status": null,
+        "plugin_id": "10038",
+        "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /login (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+        "relevant_headers": {},
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001/login",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "INCONCLUSIVE",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "INCONCLUSIVE",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Content Security Policy (CSP) Header Not Set",
+        "observed_status": null,
+        "plugin_id": "10038",
+        "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /robots.txt (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+        "relevant_headers": {},
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001/robots.txt",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "INCONCLUSIVE",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "INCONCLUSIVE",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Content Security Policy (CSP) Header Not Set",
+        "observed_status": null,
+        "plugin_id": "10038",
+        "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /sitemap.xml (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+        "relevant_headers": {},
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001/sitemap.xml",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "INCONCLUSIVE",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "INCONCLUSIVE",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Content Security Policy (CSP) Header Not Set",
+        "observed_status": null,
+        "plugin_id": "10038",
+        "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /login (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+        "relevant_headers": {},
+        "reported_method": "POST",
+        "reported_url": "http://host.docker.internal:5001/login",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "INCONCLUSIVE",
+        "verification_method": "SAFE_GET_SUBSTITUTE",
+        "verification_outcome": "INCONCLUSIVE",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": null,
+        "alert_name": "Non-Storable Content",
+        "observed_status": null,
+        "plugin_id": "10049",
+        "reason": "Skipped POST: no automatic replay of credential-submission or potentially state-changing requests.",
+        "relevant_headers": {},
+        "reported_method": "POST",
+        "reported_url": "http://host.docker.internal:5001/login",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "INCONCLUSIVE",
+        "verification_method": "UNKNOWN",
+        "verification_outcome": "INCONCLUSIVE",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Storable and Cacheable Content",
+        "observed_status": null,
+        "plugin_id": "10049",
+        "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: / (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+        "relevant_headers": {},
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "INCONCLUSIVE",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "INCONCLUSIVE",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Storable and Cacheable Content",
+        "observed_status": null,
+        "plugin_id": "10049",
+        "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /login (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+        "relevant_headers": {},
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001/login",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "INCONCLUSIVE",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "INCONCLUSIVE",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Storable and Cacheable Content",
+        "observed_status": null,
+        "plugin_id": "10049",
+        "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /robots.txt (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+        "relevant_headers": {},
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001/robots.txt",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "INCONCLUSIVE",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "INCONCLUSIVE",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Storable and Cacheable Content",
+        "observed_status": null,
+        "plugin_id": "10049",
+        "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /sitemap.xml (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+        "relevant_headers": {},
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001/sitemap.xml",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "INCONCLUSIVE",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "INCONCLUSIVE",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Permissions Policy Header Not Set",
+        "observed_status": null,
+        "plugin_id": "10063",
+        "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: / (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+        "relevant_headers": {},
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "INCONCLUSIVE",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "INCONCLUSIVE",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Permissions Policy Header Not Set",
+        "observed_status": null,
+        "plugin_id": "10063",
+        "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /login (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+        "relevant_headers": {},
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001/login",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "INCONCLUSIVE",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "INCONCLUSIVE",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Permissions Policy Header Not Set",
+        "observed_status": null,
+        "plugin_id": "10063",
+        "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /robots.txt (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+        "relevant_headers": {},
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001/robots.txt",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "INCONCLUSIVE",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "INCONCLUSIVE",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Permissions Policy Header Not Set",
+        "observed_status": null,
+        "plugin_id": "10063",
+        "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /sitemap.xml (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+        "relevant_headers": {},
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001/sitemap.xml",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "INCONCLUSIVE",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "INCONCLUSIVE",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Permissions Policy Header Not Set",
+        "observed_status": null,
+        "plugin_id": "10063",
+        "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /login (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+        "relevant_headers": {},
+        "reported_method": "POST",
+        "reported_url": "http://host.docker.internal:5001/login",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "INCONCLUSIVE",
+        "verification_method": "SAFE_GET_SUBSTITUTE",
+        "verification_outcome": "INCONCLUSIVE",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": null,
+        "alert_name": "Authentication Request Identified",
+        "observed_status": null,
+        "plugin_id": "10111",
+        "reason": "Skipped POST: no automatic replay of credential-submission or potentially state-changing requests.",
+        "relevant_headers": {},
+        "reported_method": "POST",
+        "reported_url": "http://host.docker.internal:5001/login",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "INFORMATIONAL",
+        "verification_method": "UNKNOWN",
+        "verification_outcome": "INCONCLUSIVE",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Cross-Origin-Embedder-Policy Header Missing or Invalid",
+        "observed_status": null,
+        "plugin_id": "90004",
+        "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: / (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+        "relevant_headers": {},
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "INCONCLUSIVE",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "INCONCLUSIVE",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Cross-Origin-Embedder-Policy Header Missing or Invalid",
+        "observed_status": null,
+        "plugin_id": "90004",
+        "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /login (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+        "relevant_headers": {},
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001/login",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "INCONCLUSIVE",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "INCONCLUSIVE",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Cross-Origin-Opener-Policy Header Missing or Invalid",
+        "observed_status": null,
+        "plugin_id": "90004",
+        "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: / (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+        "relevant_headers": {},
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "INCONCLUSIVE",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "INCONCLUSIVE",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Cross-Origin-Opener-Policy Header Missing or Invalid",
+        "observed_status": null,
+        "plugin_id": "90004",
+        "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /login (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+        "relevant_headers": {},
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001/login",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "INCONCLUSIVE",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "INCONCLUSIVE",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Cross-Origin-Resource-Policy Header Missing or Invalid",
+        "observed_status": null,
+        "plugin_id": "90004",
+        "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: / (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+        "relevant_headers": {},
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "INCONCLUSIVE",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "INCONCLUSIVE",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Cross-Origin-Resource-Policy Header Missing or Invalid",
+        "observed_status": null,
+        "plugin_id": "90004",
+        "reason": "Live request failed or was rejected: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /login (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=5001): Failed to establish a new connection: [Errno 1] Operation not permitted\"))",
+        "relevant_headers": {},
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001/login",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "INCONCLUSIVE",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "INCONCLUSIVE",
+        "verified_vulnerability": false
+      }
+    ],
+    "summary": {
+      "total_instances": 31,
+      "observed": 0,
+      "not_observed": 0,
+      "inconclusive": 31,
+      "needs_context": 0,
+      "manual_review": 0
+    }
+  },
+  "limitations": [
+    "Candidate findings are not automatically confirmed vulnerabilities.",
+    "Observed response characteristics do not independently prove exploitability.",
+    "Some scanner checks may require authenticated testing or manual review.",
+    "Correlation between records does not by itself establish a common root cause.",
+    "Attack paths remain candidates unless independently verified.",
+    "SQL injection, XSS, CSRF, and traversal checks use controlled local probes; observations require review and are not automatic verification."
+  ]
+}

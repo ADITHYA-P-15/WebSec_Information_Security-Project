@@ -1,0 +1,2783 @@
+{
+  "report_metadata": {
+    "title": "Web Application Security Assessment Report",
+    "assessment_id": 3,
+    "generated_at": "2026-11-03T14:23:51.750604+00:00",
+    "framework": "Web Application Security Assessment Framework",
+    "risk_score_note": "Risk scores are project-specific prioritization scores, not CVSS scores."
+  },
+  "assessment": {
+    "id": 3,
+    "target_url": "http://localhost:5001",
+    "status": "COMPLETED",
+    "created_at": "2026-11-03 14:23:51.085036"
+  },
+  "execution_stages": [
+    {
+      "name": "reconnaissance_and_role_mapping",
+      "status": "SUCCEEDED",
+      "details": "Persisted 25 endpoint observations for target 3.",
+      "started_at": "2026-11-03T14:23:51.088752",
+      "finished_at": "2026-11-03T14:23:51.604401"
+    },
+    {
+      "name": "sql_injection_and_xss_probes",
+      "status": "SUCCEEDED",
+      "details": "Common vulnerability probes complete: SQL injection candidate=True, reflected XSS candidate=True.",
+      "started_at": "2026-11-03T14:23:51.609316",
+      "finished_at": "2026-11-03T14:23:51.633925"
+    },
+    {
+      "name": "zap_candidate_import",
+      "status": "SUCCEEDED",
+      "details": "Imported scoped ZAP report zap-baseline-report.json.",
+      "started_at": "2026-11-03T14:23:51.634974",
+      "finished_at": "2026-11-03T14:23:51.654222"
+    },
+    {
+      "name": "live_response_verification",
+      "status": "SUCCEEDED",
+      "details": "Safe live-response checks saved to zap-live-verification-assessment-3.json.",
+      "started_at": "2026-11-03T14:23:51.654650",
+      "finished_at": "2026-11-03T14:23:51.712240"
+    },
+    {
+      "name": "verification_evidence_triage",
+      "status": "SUCCEEDED",
+      "details": "Persisted matching live checks as evidence; finding states unchanged.",
+      "started_at": "2026-11-03T14:23:51.713467",
+      "finished_at": "2026-11-03T14:23:51.726748"
+    },
+    {
+      "name": "risk_assessment",
+      "status": "SUCCEEDED",
+      "details": "Completed",
+      "started_at": "2026-11-03T14:23:51.728418",
+      "finished_at": "2026-11-03T14:23:51.730435"
+    },
+    {
+      "name": "attack_path_analysis",
+      "status": "SUCCEEDED",
+      "details": "Completed",
+      "started_at": "2026-11-03T14:23:51.731514",
+      "finished_at": "2026-11-03T14:23:51.736113"
+    },
+    {
+      "name": "finding_correlation",
+      "status": "SUCCEEDED",
+      "details": "Completed",
+      "started_at": "2026-11-03T14:23:51.736931",
+      "finished_at": "2026-11-03T14:23:51.740371"
+    }
+  ],
+  "targets": [
+    {
+      "id": 3,
+      "url": "http://localhost:5001",
+      "status": "ACTIVE"
+    }
+  ],
+  "assets": [],
+  "endpoints": [
+    {
+      "id": 12,
+      "target_id": 3,
+      "method": "GET",
+      "path": "/",
+      "discovered_by": "crawler"
+    },
+    {
+      "id": 13,
+      "target_id": 3,
+      "method": "GET",
+      "path": "/login",
+      "discovered_by": "crawler"
+    },
+    {
+      "id": 14,
+      "target_id": 3,
+      "method": "GET",
+      "path": "/products/preview",
+      "discovered_by": "crawler"
+    },
+    {
+      "id": 15,
+      "target_id": 3,
+      "method": "GET",
+      "path": "/dashboard",
+      "discovered_by": "crawler"
+    },
+    {
+      "id": 16,
+      "target_id": 3,
+      "method": "GET",
+      "path": "/profile",
+      "discovered_by": "crawler"
+    },
+    {
+      "id": 17,
+      "target_id": 3,
+      "method": "GET",
+      "path": "/api/orders/1",
+      "discovered_by": "api_discovery"
+    },
+    {
+      "id": 18,
+      "target_id": 3,
+      "method": "GET",
+      "path": "/admin/users",
+      "discovered_by": "api_discovery"
+    },
+    {
+      "id": 19,
+      "target_id": 3,
+      "method": "GET",
+      "path": "/api/admin/reports",
+      "discovered_by": "api_discovery"
+    },
+    {
+      "id": 20,
+      "target_id": 3,
+      "method": "GET",
+      "path": "/api/products/search",
+      "discovered_by": "api_discovery"
+    },
+    {
+      "id": 21,
+      "target_id": 3,
+      "method": "GET",
+      "path": "/api/products/search/secure",
+      "discovered_by": "api_discovery"
+    },
+    {
+      "id": 22,
+      "target_id": 3,
+      "method": "GET",
+      "path": "/products/preview/secure",
+      "discovered_by": "api_discovery"
+    }
+  ],
+  "summary": {
+    "finding_count": 13,
+    "candidate_finding_count": 13,
+    "severity_distribution": {
+      "HIGH": 1,
+      "MEDIUM": 1,
+      "LOW": 8,
+      "UNASSESSED": 3
+    },
+    "finding_status_distribution": {
+      "CANDIDATE": 13
+    },
+    "attack_path_count": 0,
+    "endpoint_count": 11,
+    "asset_count": 0,
+    "verified_finding_count": 0,
+    "remediated_finding_count": 0,
+    "reopened_finding_count": 0
+  },
+  "findings": [
+    {
+      "id": 26,
+      "title": "SQL Injection: product search parameter",
+      "vulnerability_type": "SQL_INJECTION",
+      "severity": "UNASSESSED",
+      "risk_score": 72.5,
+      "risk_severity": "HIGH",
+      "risk_factors": {
+        "confidence": 2,
+        "exploitability": 4,
+        "impact": 5
+      },
+      "risk_method": "project_preliminary_risk_v1",
+      "status": "CANDIDATE",
+      "description": "Controlled search probes observed a SQL-dependent response difference or database error disclosure. Review the evidence and compare the paired parameterized endpoint before confirming exploitability.",
+      "evidence": [
+        {
+          "id": 142,
+          "type": "controlled_sql_injection_probe",
+          "created_at": "2026-11-03 14:23:51.625565",
+          "data": {
+            "boolean_response_difference": true,
+            "boolean_result_count": 3,
+            "boolean_status": 200,
+            "control_result_count": 0,
+            "control_status": 200,
+            "database_error_disclosed": true,
+            "database_error_excerpt": "(sqlite3.OperationalError) unrecognized token: \"' ORDER BY id\"\n[SQL: SELECT id, name, description, price FROM product WHERE name LIKE '%'%' ORDER BY id]\n(Background on this error at: https://sqlalche.me/e/21/e3q8)",
+            "endpoint": "/api/products/search",
+            "error_status": 500,
+            "finding_status": "CANDIDATE",
+            "method": "GET",
+            "note": "Read-only search probes; scanner observations remain candidates pending review.",
+            "parameter": "q",
+            "secure_comparison_endpoint": "/api/products/search/secure",
+            "source": "CONTROLLED_HTTP_PROBE",
+            "test": "SQL_INJECTION",
+            "verified": false
+          }
+        }
+      ],
+      "status_history": [],
+      "latest_retest": null
+    },
+    {
+      "id": 27,
+      "title": "Cross-Site Scripting: product search preview",
+      "vulnerability_type": "CROSS_SITE_SCRIPTING",
+      "severity": "UNASSESSED",
+      "risk_score": 52.5,
+      "risk_severity": "MEDIUM",
+      "risk_factors": {
+        "confidence": 2,
+        "exploitability": 4,
+        "impact": 3
+      },
+      "risk_method": "project_preliminary_risk_v1",
+      "status": "CANDIDATE",
+      "description": "The search preview reflected a controlled HTML marker without escaping. This is a candidate reflected XSS issue; browser execution and context were not tested.",
+      "evidence": [
+        {
+          "id": 143,
+          "type": "controlled_reflected_xss_probe",
+          "created_at": "2026-11-03 14:23:51.632960",
+          "data": {
+            "endpoint": "/products/preview",
+            "finding_status": "CANDIDATE",
+            "method": "GET",
+            "note": "Reflection was checked in the response only; no script or event handler was executed.",
+            "parameter": "q",
+            "payload_reflected_unescaped": true,
+            "response_content_type": "text/html; charset=utf-8",
+            "secure_comparison_endpoint": "/products/preview/secure",
+            "secure_comparison_escaped": true,
+            "source": "CONTROLLED_HTTP_PROBE",
+            "test": "REFLECTED_XSS",
+            "verified": false
+          }
+        }
+      ],
+      "status_history": [],
+      "latest_retest": null
+    },
+    {
+      "id": 28,
+      "title": "ZAP: Missing Anti-clickjacking Header [Plugin 10020]",
+      "vulnerability_type": "SECURITY_MISCONFIGURATION",
+      "severity": "UNASSESSED",
+      "risk_score": 25.0,
+      "risk_severity": "LOW",
+      "risk_factors": {
+        "confidence": 2,
+        "exploitability": 2,
+        "impact": 2
+      },
+      "risk_method": "project_preliminary_risk_v1",
+      "status": "CANDIDATE",
+      "description": "<p>The response does not protect against 'ClickJacking' attacks. It should include either Content-Security-Policy with 'frame-ancestors' directive or X-Frame-Options.</p>\n\nZAP suggested solution:\n<p>Modern Web browsers support the Content-Security-Policy and X-Frame-Options HTTP headers. Ensure one of them is set on all web pages returned by your site/app.</p><p>If you expect the page to be framed only by pages on your server (e.g. it's part of a FRAMESET) then you'll want to use SAMEORIGIN, otherwise if you never expect the page to be framed, you should use DENY. Alternatively consider implementing Content Security Policy's \"frame-ancestors\" directive.</p>",
+      "evidence": [
+        {
+          "id": 144,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 14:23:51.637450",
+          "data": {
+            "alert_name": "Missing Anti-clickjacking Header",
+            "confidence": "2",
+            "description": "<p>The response does not protect against 'ClickJacking' attacks. It should include either Content-Security-Policy with 'frame-ancestors' directive or X-Frame-Options.</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "x-frame-options",
+            "plugin_id": "10020",
+            "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Frame-Options</p>",
+            "risk_description": "Medium (Medium)",
+            "scanner_risk": "MEDIUM",
+            "solution": "<p>Modern Web browsers support the Content-Security-Policy and X-Frame-Options HTTP headers. Ensure one of them is set on all web pages returned by your site/app.</p><p>If you expect the page to be framed only by pages on your server (e.g. it's part of a FRAMESET) then you'll want to use SAMEORIGIN, otherwise if you never expect the page to be framed, you should use DENY. Alternatively consider implementing Content Security Policy's \"frame-ancestors\" directive.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001",
+            "verified": false
+          }
+        },
+        {
+          "id": 145,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 14:23:51.637647",
+          "data": {
+            "alert_name": "Missing Anti-clickjacking Header",
+            "confidence": "2",
+            "description": "<p>The response does not protect against 'ClickJacking' attacks. It should include either Content-Security-Policy with 'frame-ancestors' directive or X-Frame-Options.</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "x-frame-options",
+            "plugin_id": "10020",
+            "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Frame-Options</p>",
+            "risk_description": "Medium (Medium)",
+            "scanner_risk": "MEDIUM",
+            "solution": "<p>Modern Web browsers support the Content-Security-Policy and X-Frame-Options HTTP headers. Ensure one of them is set on all web pages returned by your site/app.</p><p>If you expect the page to be framed only by pages on your server (e.g. it's part of a FRAMESET) then you'll want to use SAMEORIGIN, otherwise if you never expect the page to be framed, you should use DENY. Alternatively consider implementing Content Security Policy's \"frame-ancestors\" directive.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/login",
+            "verified": false
+          }
+        },
+        {
+          "id": 180,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 14:23:51.717296",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Missing Anti-clickjacking Header",
+            "observed_status": 200,
+            "plugin_id": "10020",
+            "reason": "Neither X-Frame-Options nor CSP frame-ancestors was observed.",
+            "relevant_headers": {
+              "Server": "Werkzeug/3.1.9 Python/3.14.10",
+              "Vary": "Cookie"
+            },
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "OBSERVED_CHARACTERISTIC",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "OBSERVED",
+            "verified_vulnerability": false
+          }
+        },
+        {
+          "id": 181,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 14:23:51.717647",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Missing Anti-clickjacking Header",
+            "observed_status": 200,
+            "plugin_id": "10020",
+            "reason": "Neither X-Frame-Options nor CSP frame-ancestors was observed.",
+            "relevant_headers": {
+              "Server": "Werkzeug/3.1.9 Python/3.14.10",
+              "Vary": "Cookie"
+            },
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001/login",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "OBSERVED_CHARACTERISTIC",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "OBSERVED",
+            "verified_vulnerability": false
+          }
+        }
+      ],
+      "status_history": [],
+      "latest_retest": null
+    },
+    {
+      "id": 29,
+      "title": "ZAP: X-Content-Type-Options Header Missing [Plugin 10021]",
+      "vulnerability_type": "SECURITY_MISCONFIGURATION",
+      "severity": "UNASSESSED",
+      "risk_score": 25.0,
+      "risk_severity": "LOW",
+      "risk_factors": {
+        "confidence": 2,
+        "exploitability": 2,
+        "impact": 2
+      },
+      "risk_method": "project_preliminary_risk_v1",
+      "status": "CANDIDATE",
+      "description": "<p>The Anti-MIME-Sniffing header X-Content-Type-Options was not set to 'nosniff'. This allows older versions of Internet Explorer and Chrome to perform MIME-sniffing on the response body, potentially causing the response body to be interpreted and displayed as a content type other than the declared content type. Current (early 2014) and legacy versions of Firefox will use the declared content type (if one is set), rather than performing MIME-sniffing.</p>\n\nZAP suggested solution:\n<p>Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to 'nosniff' for all web pages.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that does not perform MIME-sniffing at all, or that can be directed by the web application/web server to not perform MIME-sniffing.</p>",
+      "evidence": [
+        {
+          "id": 146,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 14:23:51.638906",
+          "data": {
+            "alert_name": "X-Content-Type-Options Header Missing",
+            "confidence": "2",
+            "description": "<p>The Anti-MIME-Sniffing header X-Content-Type-Options was not set to 'nosniff'. This allows older versions of Internet Explorer and Chrome to perform MIME-sniffing on the response body, potentially causing the response body to be interpreted and displayed as a content type other than the declared content type. Current (early 2014) and legacy versions of Firefox will use the declared content type (if one is set), rather than performing MIME-sniffing.</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "x-content-type-options",
+            "plugin_id": "10021",
+            "reference": "<p>https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/compatibility/gg622941(v=vs.85)</p><p>https://owasp.org/www-community/Security_Headers</p>",
+            "risk_description": "Low (Medium)",
+            "scanner_risk": "LOW",
+            "solution": "<p>Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to 'nosniff' for all web pages.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that does not perform MIME-sniffing at all, or that can be directed by the web application/web server to not perform MIME-sniffing.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001",
+            "verified": false
+          }
+        },
+        {
+          "id": 147,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 14:23:51.639104",
+          "data": {
+            "alert_name": "X-Content-Type-Options Header Missing",
+            "confidence": "2",
+            "description": "<p>The Anti-MIME-Sniffing header X-Content-Type-Options was not set to 'nosniff'. This allows older versions of Internet Explorer and Chrome to perform MIME-sniffing on the response body, potentially causing the response body to be interpreted and displayed as a content type other than the declared content type. Current (early 2014) and legacy versions of Firefox will use the declared content type (if one is set), rather than performing MIME-sniffing.</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "x-content-type-options",
+            "plugin_id": "10021",
+            "reference": "<p>https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/compatibility/gg622941(v=vs.85)</p><p>https://owasp.org/www-community/Security_Headers</p>",
+            "risk_description": "Low (Medium)",
+            "scanner_risk": "LOW",
+            "solution": "<p>Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to 'nosniff' for all web pages.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that does not perform MIME-sniffing at all, or that can be directed by the web application/web server to not perform MIME-sniffing.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/login",
+            "verified": false
+          }
+        },
+        {
+          "id": 198,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 14:23:51.723748",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "X-Content-Type-Options Header Missing",
+            "observed_status": 200,
+            "plugin_id": "10021",
+            "reason": "Relevant header presence checked against the live response.",
+            "relevant_headers": {
+              "Server": "Werkzeug/3.1.9 Python/3.14.10",
+              "Vary": "Cookie"
+            },
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "OBSERVED_CHARACTERISTIC",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "OBSERVED",
+            "verified_vulnerability": false
+          }
+        },
+        {
+          "id": 199,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 14:23:51.724119",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "X-Content-Type-Options Header Missing",
+            "observed_status": 200,
+            "plugin_id": "10021",
+            "reason": "Relevant header presence checked against the live response.",
+            "relevant_headers": {
+              "Server": "Werkzeug/3.1.9 Python/3.14.10",
+              "Vary": "Cookie"
+            },
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001/login",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "OBSERVED_CHARACTERISTIC",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "OBSERVED",
+            "verified_vulnerability": false
+          }
+        }
+      ],
+      "status_history": [],
+      "latest_retest": null
+    },
+    {
+      "id": 30,
+      "title": "ZAP: Server Leaks Version Information via \"Server\" HTTP Response Header Field [Plugin 10036]",
+      "vulnerability_type": "SECURITY_MISCONFIGURATION",
+      "severity": "UNASSESSED",
+      "risk_score": 25.0,
+      "risk_severity": "LOW",
+      "risk_factors": {
+        "confidence": 2,
+        "exploitability": 2,
+        "impact": 2
+      },
+      "risk_method": "project_preliminary_risk_v1",
+      "status": "CANDIDATE",
+      "description": "<p>The web/application server is leaking version information via the \"Server\" HTTP response header. Access to such information may facilitate attackers identifying other vulnerabilities your web/application server is subject to.</p>\n\nZAP suggested solution:\n<p>Ensure that your web server, application server, load balancer, etc. is configured to suppress the \"Server\" header or provide generic details.</p>",
+      "evidence": [
+        {
+          "id": 148,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 14:23:51.640269",
+          "data": {
+            "alert_name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+            "confidence": "3",
+            "description": "<p>The web/application server is leaking version information via the \"Server\" HTTP response header. Access to such information may facilitate attackers identifying other vulnerabilities your web/application server is subject to.</p>",
+            "method": "GET",
+            "observed_evidence": "Werkzeug/3.1.9 Python/3.14.8",
+            "parameter": "",
+            "plugin_id": "10036",
+            "reference": "<p>https://httpd.apache.org/docs/current/mod/core.html#servertokens</p><p>https://learn.microsoft.com/en-us/previous-versions/msp-n-p/ff648552(v=pandp.10)</p><p>https://www.troyhunt.com/shhh-dont-let-your-response-headers/</p>",
+            "risk_description": "Low (High)",
+            "scanner_risk": "LOW",
+            "solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to suppress the \"Server\" header or provide generic details.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001",
+            "verified": false
+          }
+        },
+        {
+          "id": 149,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 14:23:51.640577",
+          "data": {
+            "alert_name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+            "confidence": "3",
+            "description": "<p>The web/application server is leaking version information via the \"Server\" HTTP response header. Access to such information may facilitate attackers identifying other vulnerabilities your web/application server is subject to.</p>",
+            "method": "GET",
+            "observed_evidence": "Werkzeug/3.1.9 Python/3.14.8",
+            "parameter": "",
+            "plugin_id": "10036",
+            "reference": "<p>https://httpd.apache.org/docs/current/mod/core.html#servertokens</p><p>https://learn.microsoft.com/en-us/previous-versions/msp-n-p/ff648552(v=pandp.10)</p><p>https://www.troyhunt.com/shhh-dont-let-your-response-headers/</p>",
+            "risk_description": "Low (High)",
+            "scanner_risk": "LOW",
+            "solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to suppress the \"Server\" header or provide generic details.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/login",
+            "verified": false
+          }
+        },
+        {
+          "id": 150,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 14:23:51.640986",
+          "data": {
+            "alert_name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+            "confidence": "3",
+            "description": "<p>The web/application server is leaking version information via the \"Server\" HTTP response header. Access to such information may facilitate attackers identifying other vulnerabilities your web/application server is subject to.</p>",
+            "method": "GET",
+            "observed_evidence": "Werkzeug/3.1.9 Python/3.14.8",
+            "parameter": "",
+            "plugin_id": "10036",
+            "reference": "<p>https://httpd.apache.org/docs/current/mod/core.html#servertokens</p><p>https://learn.microsoft.com/en-us/previous-versions/msp-n-p/ff648552(v=pandp.10)</p><p>https://www.troyhunt.com/shhh-dont-let-your-response-headers/</p>",
+            "risk_description": "Low (High)",
+            "scanner_risk": "LOW",
+            "solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to suppress the \"Server\" header or provide generic details.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/robots.txt",
+            "verified": false
+          }
+        },
+        {
+          "id": 151,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 14:23:51.641426",
+          "data": {
+            "alert_name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+            "confidence": "3",
+            "description": "<p>The web/application server is leaking version information via the \"Server\" HTTP response header. Access to such information may facilitate attackers identifying other vulnerabilities your web/application server is subject to.</p>",
+            "method": "GET",
+            "observed_evidence": "Werkzeug/3.1.9 Python/3.14.8",
+            "parameter": "",
+            "plugin_id": "10036",
+            "reference": "<p>https://httpd.apache.org/docs/current/mod/core.html#servertokens</p><p>https://learn.microsoft.com/en-us/previous-versions/msp-n-p/ff648552(v=pandp.10)</p><p>https://www.troyhunt.com/shhh-dont-let-your-response-headers/</p>",
+            "risk_description": "Low (High)",
+            "scanner_risk": "LOW",
+            "solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to suppress the \"Server\" header or provide generic details.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/sitemap.xml",
+            "verified": false
+          }
+        },
+        {
+          "id": 152,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 14:23:51.641699",
+          "data": {
+            "alert_name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+            "confidence": "3",
+            "description": "<p>The web/application server is leaking version information via the \"Server\" HTTP response header. Access to such information may facilitate attackers identifying other vulnerabilities your web/application server is subject to.</p>",
+            "method": "POST",
+            "observed_evidence": "Werkzeug/3.1.9 Python/3.14.8",
+            "parameter": "",
+            "plugin_id": "10036",
+            "reference": "<p>https://httpd.apache.org/docs/current/mod/core.html#servertokens</p><p>https://learn.microsoft.com/en-us/previous-versions/msp-n-p/ff648552(v=pandp.10)</p><p>https://www.troyhunt.com/shhh-dont-let-your-response-headers/</p>",
+            "risk_description": "Low (High)",
+            "scanner_risk": "LOW",
+            "solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to suppress the \"Server\" header or provide generic details.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/login",
+            "verified": false
+          }
+        },
+        {
+          "id": 193,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 14:23:51.721968",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+            "observed_status": 200,
+            "plugin_id": "10036",
+            "reason": "Server header present: Werkzeug/3.1.9 Python/3.14.10",
+            "relevant_headers": {
+              "Server": "Werkzeug/3.1.9 Python/3.14.10",
+              "Vary": "Cookie"
+            },
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "OBSERVED_CHARACTERISTIC",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "OBSERVED",
+            "verified_vulnerability": false
+          }
+        },
+        {
+          "id": 194,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 14:23:51.722320",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+            "observed_status": 200,
+            "plugin_id": "10036",
+            "reason": "Server header present: Werkzeug/3.1.9 Python/3.14.10",
+            "relevant_headers": {
+              "Server": "Werkzeug/3.1.9 Python/3.14.10",
+              "Vary": "Cookie"
+            },
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001/login",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "OBSERVED_CHARACTERISTIC",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "OBSERVED",
+            "verified_vulnerability": false
+          }
+        },
+        {
+          "id": 195,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 14:23:51.722667",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+            "observed_status": 404,
+            "plugin_id": "10036",
+            "reason": "Server header present: Werkzeug/3.1.9 Python/3.14.10",
+            "relevant_headers": {
+              "Server": "Werkzeug/3.1.9 Python/3.14.10",
+              "Vary": "Cookie"
+            },
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001/robots.txt",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "OBSERVED_CHARACTERISTIC",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "OBSERVED",
+            "verified_vulnerability": false
+          }
+        },
+        {
+          "id": 196,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 14:23:51.723026",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+            "observed_status": 404,
+            "plugin_id": "10036",
+            "reason": "Server header present: Werkzeug/3.1.9 Python/3.14.10",
+            "relevant_headers": {
+              "Server": "Werkzeug/3.1.9 Python/3.14.10",
+              "Vary": "Cookie"
+            },
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001/sitemap.xml",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "OBSERVED_CHARACTERISTIC",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "OBSERVED",
+            "verified_vulnerability": false
+          }
+        },
+        {
+          "id": 197,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 14:23:51.723386",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+            "observed_status": 200,
+            "plugin_id": "10036",
+            "reason": "Server header present: Werkzeug/3.1.9 Python/3.14.10",
+            "relevant_headers": {
+              "Server": "Werkzeug/3.1.9 Python/3.14.10",
+              "Vary": "Cookie"
+            },
+            "reported_method": "POST",
+            "reported_url": "http://host.docker.internal:5001/login",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "OBSERVED_CHARACTERISTIC",
+            "verification_method": "SAFE_GET_SUBSTITUTE",
+            "verification_outcome": "OBSERVED",
+            "verified_vulnerability": false
+          }
+        }
+      ],
+      "status_history": [],
+      "latest_retest": null
+    },
+    {
+      "id": 31,
+      "title": "ZAP: Content Security Policy (CSP) Header Not Set [Plugin 10038]",
+      "vulnerability_type": "SECURITY_MISCONFIGURATION",
+      "severity": "UNASSESSED",
+      "risk_score": 25.0,
+      "risk_severity": "LOW",
+      "risk_factors": {
+        "confidence": 2,
+        "exploitability": 2,
+        "impact": 2
+      },
+      "risk_method": "project_preliminary_risk_v1",
+      "status": "CANDIDATE",
+      "description": "<p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page — covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.</p>\n\nZAP suggested solution:\n<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header.</p>",
+      "evidence": [
+        {
+          "id": 153,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 14:23:51.643194",
+          "data": {
+            "alert_name": "Content Security Policy (CSP) Header Not Set",
+            "confidence": "3",
+            "description": "<p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page — covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "",
+            "plugin_id": "10038",
+            "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP</p><p>https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html</p><p>https://www.w3.org/TR/CSP/</p><p>https://w3c.github.io/webappsec-csp/</p><p>https://web.dev/articles/csp</p><p>https://caniuse.com/#feat=contentsecuritypolicy</p><p>https://content-security-policy.com/</p>",
+            "risk_description": "Medium (High)",
+            "scanner_risk": "MEDIUM",
+            "solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001",
+            "verified": false
+          }
+        },
+        {
+          "id": 154,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 14:23:51.643455",
+          "data": {
+            "alert_name": "Content Security Policy (CSP) Header Not Set",
+            "confidence": "3",
+            "description": "<p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page — covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "",
+            "plugin_id": "10038",
+            "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP</p><p>https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html</p><p>https://www.w3.org/TR/CSP/</p><p>https://w3c.github.io/webappsec-csp/</p><p>https://web.dev/articles/csp</p><p>https://caniuse.com/#feat=contentsecuritypolicy</p><p>https://content-security-policy.com/</p>",
+            "risk_description": "Medium (High)",
+            "scanner_risk": "MEDIUM",
+            "solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/login",
+            "verified": false
+          }
+        },
+        {
+          "id": 155,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 14:23:51.643748",
+          "data": {
+            "alert_name": "Content Security Policy (CSP) Header Not Set",
+            "confidence": "3",
+            "description": "<p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page — covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "",
+            "plugin_id": "10038",
+            "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP</p><p>https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html</p><p>https://www.w3.org/TR/CSP/</p><p>https://w3c.github.io/webappsec-csp/</p><p>https://web.dev/articles/csp</p><p>https://caniuse.com/#feat=contentsecuritypolicy</p><p>https://content-security-policy.com/</p>",
+            "risk_description": "Medium (High)",
+            "scanner_risk": "MEDIUM",
+            "solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/robots.txt",
+            "verified": false
+          }
+        },
+        {
+          "id": 156,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 14:23:51.643994",
+          "data": {
+            "alert_name": "Content Security Policy (CSP) Header Not Set",
+            "confidence": "3",
+            "description": "<p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page — covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "",
+            "plugin_id": "10038",
+            "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP</p><p>https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html</p><p>https://www.w3.org/TR/CSP/</p><p>https://w3c.github.io/webappsec-csp/</p><p>https://web.dev/articles/csp</p><p>https://caniuse.com/#feat=contentsecuritypolicy</p><p>https://content-security-policy.com/</p>",
+            "risk_description": "Medium (High)",
+            "scanner_risk": "MEDIUM",
+            "solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/sitemap.xml",
+            "verified": false
+          }
+        },
+        {
+          "id": 157,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 14:23:51.644151",
+          "data": {
+            "alert_name": "Content Security Policy (CSP) Header Not Set",
+            "confidence": "3",
+            "description": "<p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page — covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.</p>",
+            "method": "POST",
+            "observed_evidence": "",
+            "parameter": "",
+            "plugin_id": "10038",
+            "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP</p><p>https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html</p><p>https://www.w3.org/TR/CSP/</p><p>https://w3c.github.io/webappsec-csp/</p><p>https://web.dev/articles/csp</p><p>https://caniuse.com/#feat=contentsecuritypolicy</p><p>https://content-security-policy.com/</p>",
+            "risk_description": "Medium (High)",
+            "scanner_risk": "MEDIUM",
+            "solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/login",
+            "verified": false
+          }
+        },
+        {
+          "id": 175,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 14:23:51.715026",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Content Security Policy (CSP) Header Not Set",
+            "observed_status": 200,
+            "plugin_id": "10038",
+            "reason": "Relevant header presence checked against the live response.",
+            "relevant_headers": {
+              "Server": "Werkzeug/3.1.9 Python/3.14.10",
+              "Vary": "Cookie"
+            },
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "OBSERVED_CHARACTERISTIC",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "OBSERVED",
+            "verified_vulnerability": false
+          }
+        },
+        {
+          "id": 176,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 14:23:51.715673",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Content Security Policy (CSP) Header Not Set",
+            "observed_status": 200,
+            "plugin_id": "10038",
+            "reason": "Relevant header presence checked against the live response.",
+            "relevant_headers": {
+              "Server": "Werkzeug/3.1.9 Python/3.14.10",
+              "Vary": "Cookie"
+            },
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001/login",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "OBSERVED_CHARACTERISTIC",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "OBSERVED",
+            "verified_vulnerability": false
+          }
+        },
+        {
+          "id": 177,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 14:23:51.716057",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Content Security Policy (CSP) Header Not Set",
+            "observed_status": 404,
+            "plugin_id": "10038",
+            "reason": "Relevant header presence checked against the live response.",
+            "relevant_headers": {
+              "Server": "Werkzeug/3.1.9 Python/3.14.10",
+              "Vary": "Cookie"
+            },
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001/robots.txt",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "OBSERVED_CHARACTERISTIC",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "OBSERVED",
+            "verified_vulnerability": false
+          }
+        },
+        {
+          "id": 178,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 14:23:51.716478",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Content Security Policy (CSP) Header Not Set",
+            "observed_status": 404,
+            "plugin_id": "10038",
+            "reason": "Relevant header presence checked against the live response.",
+            "relevant_headers": {
+              "Server": "Werkzeug/3.1.9 Python/3.14.10",
+              "Vary": "Cookie"
+            },
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001/sitemap.xml",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "OBSERVED_CHARACTERISTIC",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "OBSERVED",
+            "verified_vulnerability": false
+          }
+        },
+        {
+          "id": 179,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 14:23:51.716938",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Content Security Policy (CSP) Header Not Set",
+            "observed_status": 200,
+            "plugin_id": "10038",
+            "reason": "Relevant header presence checked against the live response.",
+            "relevant_headers": {
+              "Server": "Werkzeug/3.1.9 Python/3.14.10",
+              "Vary": "Cookie"
+            },
+            "reported_method": "POST",
+            "reported_url": "http://host.docker.internal:5001/login",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "OBSERVED_CHARACTERISTIC",
+            "verification_method": "SAFE_GET_SUBSTITUTE",
+            "verification_outcome": "OBSERVED",
+            "verified_vulnerability": false
+          }
+        }
+      ],
+      "status_history": [],
+      "latest_retest": null
+    },
+    {
+      "id": 32,
+      "title": "ZAP: Non-Storable Content [Plugin 10049]",
+      "vulnerability_type": "CACHE_CONTROL",
+      "severity": "UNASSESSED",
+      "risk_score": null,
+      "risk_severity": "UNASSESSED",
+      "risk_factors": {},
+      "risk_method": null,
+      "status": "CANDIDATE",
+      "description": "<p>The response contents are not storable by caching components such as proxy servers. If the response does not contain sensitive, personal or user-specific information, it may benefit from being stored and cached, to improve performance.</p>\n\nZAP suggested solution:\n<p>The content may be marked as storable by ensuring that the following conditions are satisfied:</p><p>The request method must be understood by the cache and defined as being cacheable (\"GET\", \"HEAD\", and \"POST\" are currently defined as cacheable)</p><p>The response status code must be understood by the cache (one of the 1XX, 2XX, 3XX, 4XX, or 5XX response classes are generally understood)</p><p>The \"no-store\" cache directive must not appear in the request or response header fields</p><p>For caching by \"shared\" caches such as \"proxy\" caches, the \"private\" response directive must not appear in the response</p><p>For caching by \"shared\" caches such as \"proxy\" caches, the \"Authorization\" header field must not appear in the request, unless the response explicitly allows it (using one of the \"must-revalidate\", \"public\", or \"s-maxage\" Cache-Control response directives)</p><p>In addition to the conditions above, at least one of the following conditions must also be satisfied by the response:</p><p>It must contain an \"Expires\" header field</p><p>It must contain a \"max-age\" response directive</p><p>For \"shared\" caches such as \"proxy\" caches, it must contain a \"s-maxage\" response directive</p><p>It must contain a \"Cache Control Extension\" that allows it to be cached</p><p>It must have a status code that is defined as cacheable by default (200, 203, 204, 206, 300, 301, 404, 405, 410, 414, 501).</p>",
+      "evidence": [
+        {
+          "id": 158,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 14:23:51.645396",
+          "data": {
+            "alert_name": "Non-Storable Content",
+            "confidence": "2",
+            "description": "<p>The response contents are not storable by caching components such as proxy servers. If the response does not contain sensitive, personal or user-specific information, it may benefit from being stored and cached, to improve performance.</p>",
+            "method": "POST",
+            "observed_evidence": "401",
+            "parameter": "",
+            "plugin_id": "10049",
+            "reference": "<p>https://datatracker.ietf.org/doc/html/rfc7234</p><p>https://datatracker.ietf.org/doc/html/rfc7231</p><p>https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html</p>",
+            "risk_description": "Informational (Medium)",
+            "scanner_risk": "INFO",
+            "solution": "<p>The content may be marked as storable by ensuring that the following conditions are satisfied:</p><p>The request method must be understood by the cache and defined as being cacheable (\"GET\", \"HEAD\", and \"POST\" are currently defined as cacheable)</p><p>The response status code must be understood by the cache (one of the 1XX, 2XX, 3XX, 4XX, or 5XX response classes are generally understood)</p><p>The \"no-store\" cache directive must not appear in the request or response header fields</p><p>For caching by \"shared\" caches such as \"proxy\" caches, the \"private\" response directive must not appear in the response</p><p>For caching by \"shared\" caches such as \"proxy\" caches, the \"Authorization\" header field must not appear in the request, unless the response explicitly allows it (using one of the \"must-revalidate\", \"public\", or \"s-maxage\" Cache-Control response directives)</p><p>In addition to the conditions above, at least one of the following conditions must also be satisfied by the response:</p><p>It must contain an \"Expires\" header field</p><p>It must contain a \"max-age\" response directive</p><p>For \"shared\" caches such as \"proxy\" caches, it must contain a \"s-maxage\" response directive</p><p>It must contain a \"Cache Control Extension\" that allows it to be cached</p><p>It must have a status code that is defined as cacheable by default (200, 203, 204, 206, 300, 301, 404, 405, 410, 414, 501).</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/login",
+            "verified": false
+          }
+        },
+        {
+          "id": 201,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 14:23:51.724886",
+          "data": {
+            "actual_request_method": null,
+            "alert_name": "Non-Storable Content",
+            "observed_status": null,
+            "plugin_id": "10049",
+            "reason": "Skipped POST: no automatic replay of credential-submission or potentially state-changing requests.",
+            "relevant_headers": {},
+            "reported_method": "POST",
+            "reported_url": "http://host.docker.internal:5001/login",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "INCONCLUSIVE",
+            "verification_method": "UNKNOWN",
+            "verification_outcome": "INCONCLUSIVE",
+            "verified_vulnerability": false
+          }
+        }
+      ],
+      "status_history": [],
+      "latest_retest": null
+    },
+    {
+      "id": 33,
+      "title": "ZAP: Storable and Cacheable Content [Plugin 10049]",
+      "vulnerability_type": "CACHE_CONTROL",
+      "severity": "UNASSESSED",
+      "risk_score": null,
+      "risk_severity": "UNASSESSED",
+      "risk_factors": {},
+      "risk_method": null,
+      "status": "CANDIDATE",
+      "description": "<p>The response contents are storable by caching components such as proxy servers, and may be retrieved directly from the cache, rather than from the origin server by the caching servers, in response to similar requests from other users. If the response data is sensitive, personal or user-specific, this may result in sensitive information being leaked. In some cases, this may even result in a user gaining complete control of the session of another user, depending on the configuration of the caching components in use in their environment. This is primarily an issue where \"shared\" caching servers such as \"proxy\" caches are configured on the local network. This configuration is typically found in corporate or educational environments, for instance.</p>\n\nZAP suggested solution:\n<p>Validate that the response does not contain sensitive, personal or user-specific information. If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:</p><p>Cache-Control: no-cache, no-store, must-revalidate, private</p><p>Pragma: no-cache</p><p>Expires: 0</p><p>This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request.</p>",
+      "evidence": [
+        {
+          "id": 159,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 14:23:51.646471",
+          "data": {
+            "alert_name": "Storable and Cacheable Content",
+            "confidence": "2",
+            "description": "<p>The response contents are storable by caching components such as proxy servers, and may be retrieved directly from the cache, rather than from the origin server by the caching servers, in response to similar requests from other users. If the response data is sensitive, personal or user-specific, this may result in sensitive information being leaked. In some cases, this may even result in a user gaining complete control of the session of another user, depending on the configuration of the caching components in use in their environment. This is primarily an issue where \"shared\" caching servers such as \"proxy\" caches are configured on the local network. This configuration is typically found in corporate or educational environments, for instance.</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "",
+            "plugin_id": "10049",
+            "reference": "<p>https://datatracker.ietf.org/doc/html/rfc7234</p><p>https://datatracker.ietf.org/doc/html/rfc7231</p><p>https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html</p>",
+            "risk_description": "Informational (Medium)",
+            "scanner_risk": "INFO",
+            "solution": "<p>Validate that the response does not contain sensitive, personal or user-specific information. If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:</p><p>Cache-Control: no-cache, no-store, must-revalidate, private</p><p>Pragma: no-cache</p><p>Expires: 0</p><p>This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001",
+            "verified": false
+          }
+        },
+        {
+          "id": 160,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 14:23:51.646717",
+          "data": {
+            "alert_name": "Storable and Cacheable Content",
+            "confidence": "2",
+            "description": "<p>The response contents are storable by caching components such as proxy servers, and may be retrieved directly from the cache, rather than from the origin server by the caching servers, in response to similar requests from other users. If the response data is sensitive, personal or user-specific, this may result in sensitive information being leaked. In some cases, this may even result in a user gaining complete control of the session of another user, depending on the configuration of the caching components in use in their environment. This is primarily an issue where \"shared\" caching servers such as \"proxy\" caches are configured on the local network. This configuration is typically found in corporate or educational environments, for instance.</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "",
+            "plugin_id": "10049",
+            "reference": "<p>https://datatracker.ietf.org/doc/html/rfc7234</p><p>https://datatracker.ietf.org/doc/html/rfc7231</p><p>https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html</p>",
+            "risk_description": "Informational (Medium)",
+            "scanner_risk": "INFO",
+            "solution": "<p>Validate that the response does not contain sensitive, personal or user-specific information. If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:</p><p>Cache-Control: no-cache, no-store, must-revalidate, private</p><p>Pragma: no-cache</p><p>Expires: 0</p><p>This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/login",
+            "verified": false
+          }
+        },
+        {
+          "id": 161,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 14:23:51.646933",
+          "data": {
+            "alert_name": "Storable and Cacheable Content",
+            "confidence": "2",
+            "description": "<p>The response contents are storable by caching components such as proxy servers, and may be retrieved directly from the cache, rather than from the origin server by the caching servers, in response to similar requests from other users. If the response data is sensitive, personal or user-specific, this may result in sensitive information being leaked. In some cases, this may even result in a user gaining complete control of the session of another user, depending on the configuration of the caching components in use in their environment. This is primarily an issue where \"shared\" caching servers such as \"proxy\" caches are configured on the local network. This configuration is typically found in corporate or educational environments, for instance.</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "",
+            "plugin_id": "10049",
+            "reference": "<p>https://datatracker.ietf.org/doc/html/rfc7234</p><p>https://datatracker.ietf.org/doc/html/rfc7231</p><p>https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html</p>",
+            "risk_description": "Informational (Medium)",
+            "scanner_risk": "INFO",
+            "solution": "<p>Validate that the response does not contain sensitive, personal or user-specific information. If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:</p><p>Cache-Control: no-cache, no-store, must-revalidate, private</p><p>Pragma: no-cache</p><p>Expires: 0</p><p>This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/robots.txt",
+            "verified": false
+          }
+        },
+        {
+          "id": 162,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 14:23:51.647084",
+          "data": {
+            "alert_name": "Storable and Cacheable Content",
+            "confidence": "2",
+            "description": "<p>The response contents are storable by caching components such as proxy servers, and may be retrieved directly from the cache, rather than from the origin server by the caching servers, in response to similar requests from other users. If the response data is sensitive, personal or user-specific, this may result in sensitive information being leaked. In some cases, this may even result in a user gaining complete control of the session of another user, depending on the configuration of the caching components in use in their environment. This is primarily an issue where \"shared\" caching servers such as \"proxy\" caches are configured on the local network. This configuration is typically found in corporate or educational environments, for instance.</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "",
+            "plugin_id": "10049",
+            "reference": "<p>https://datatracker.ietf.org/doc/html/rfc7234</p><p>https://datatracker.ietf.org/doc/html/rfc7231</p><p>https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html</p>",
+            "risk_description": "Informational (Medium)",
+            "scanner_risk": "INFO",
+            "solution": "<p>Validate that the response does not contain sensitive, personal or user-specific information. If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:</p><p>Cache-Control: no-cache, no-store, must-revalidate, private</p><p>Pragma: no-cache</p><p>Expires: 0</p><p>This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/sitemap.xml",
+            "verified": false
+          }
+        },
+        {
+          "id": 202,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 14:23:51.725225",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Storable and Cacheable Content",
+            "observed_status": 200,
+            "plugin_id": "10049",
+            "reason": "Review Cache-Control, response content sensitivity, authentication state, and caching requirements.",
+            "relevant_headers": {
+              "Server": "Werkzeug/3.1.9 Python/3.14.10",
+              "Vary": "Cookie"
+            },
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "NEEDS_CONTEXT",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "NEEDS_CONTEXT",
+            "verified_vulnerability": false
+          }
+        },
+        {
+          "id": 203,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 14:23:51.725584",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Storable and Cacheable Content",
+            "observed_status": 200,
+            "plugin_id": "10049",
+            "reason": "Review Cache-Control, response content sensitivity, authentication state, and caching requirements.",
+            "relevant_headers": {
+              "Server": "Werkzeug/3.1.9 Python/3.14.10",
+              "Vary": "Cookie"
+            },
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001/login",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "NEEDS_CONTEXT",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "NEEDS_CONTEXT",
+            "verified_vulnerability": false
+          }
+        },
+        {
+          "id": 204,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 14:23:51.725923",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Storable and Cacheable Content",
+            "observed_status": 404,
+            "plugin_id": "10049",
+            "reason": "Review Cache-Control, response content sensitivity, authentication state, and caching requirements.",
+            "relevant_headers": {
+              "Server": "Werkzeug/3.1.9 Python/3.14.10",
+              "Vary": "Cookie"
+            },
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001/robots.txt",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "NEEDS_CONTEXT",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "NEEDS_CONTEXT",
+            "verified_vulnerability": false
+          }
+        },
+        {
+          "id": 205,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 14:23:51.726208",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Storable and Cacheable Content",
+            "observed_status": 404,
+            "plugin_id": "10049",
+            "reason": "Review Cache-Control, response content sensitivity, authentication state, and caching requirements.",
+            "relevant_headers": {
+              "Server": "Werkzeug/3.1.9 Python/3.14.10",
+              "Vary": "Cookie"
+            },
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001/sitemap.xml",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "NEEDS_CONTEXT",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "NEEDS_CONTEXT",
+            "verified_vulnerability": false
+          }
+        }
+      ],
+      "status_history": [],
+      "latest_retest": null
+    },
+    {
+      "id": 34,
+      "title": "ZAP: Permissions Policy Header Not Set [Plugin 10063]",
+      "vulnerability_type": "SECURITY_MISCONFIGURATION",
+      "severity": "UNASSESSED",
+      "risk_score": 25.0,
+      "risk_severity": "LOW",
+      "risk_factors": {
+        "confidence": 2,
+        "exploitability": 2,
+        "impact": 2
+      },
+      "risk_method": "project_preliminary_risk_v1",
+      "status": "CANDIDATE",
+      "description": "<p>Permissions Policy Header is an added layer of security that helps to restrict from unauthorized access or usage of browser/client features by web resources. This policy ensures the user privacy by limiting or specifying the features of the browsers can be used by the web resources. Permissions Policy provides a set of standard HTTP headers that allow website owners to limit which features of browsers can be used by the page such as camera, microphone, location, full screen etc.</p>\n\nZAP suggested solution:\n<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Permissions-Policy header.</p>",
+      "evidence": [
+        {
+          "id": 163,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 14:23:51.648040",
+          "data": {
+            "alert_name": "Permissions Policy Header Not Set",
+            "confidence": "2",
+            "description": "<p>Permissions Policy Header is an added layer of security that helps to restrict from unauthorized access or usage of browser/client features by web resources. This policy ensures the user privacy by limiting or specifying the features of the browsers can be used by the web resources. Permissions Policy provides a set of standard HTTP headers that allow website owners to limit which features of browsers can be used by the page such as camera, microphone, location, full screen etc.</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "",
+            "plugin_id": "10063",
+            "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Permissions-Policy</p><p>https://developer.chrome.com/blog/feature-policy/</p><p>https://scotthelme.co.uk/a-new-security-header-feature-policy/</p><p>https://w3c.github.io/webappsec-feature-policy/</p><p>https://www.smashingmagazine.com/2018/12/feature-policy/</p>",
+            "risk_description": "Low (Medium)",
+            "scanner_risk": "LOW",
+            "solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Permissions-Policy header.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001",
+            "verified": false
+          }
+        },
+        {
+          "id": 164,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 14:23:51.648275",
+          "data": {
+            "alert_name": "Permissions Policy Header Not Set",
+            "confidence": "2",
+            "description": "<p>Permissions Policy Header is an added layer of security that helps to restrict from unauthorized access or usage of browser/client features by web resources. This policy ensures the user privacy by limiting or specifying the features of the browsers can be used by the web resources. Permissions Policy provides a set of standard HTTP headers that allow website owners to limit which features of browsers can be used by the page such as camera, microphone, location, full screen etc.</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "",
+            "plugin_id": "10063",
+            "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Permissions-Policy</p><p>https://developer.chrome.com/blog/feature-policy/</p><p>https://scotthelme.co.uk/a-new-security-header-feature-policy/</p><p>https://w3c.github.io/webappsec-feature-policy/</p><p>https://www.smashingmagazine.com/2018/12/feature-policy/</p>",
+            "risk_description": "Low (Medium)",
+            "scanner_risk": "LOW",
+            "solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Permissions-Policy header.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/login",
+            "verified": false
+          }
+        },
+        {
+          "id": 165,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 14:23:51.648483",
+          "data": {
+            "alert_name": "Permissions Policy Header Not Set",
+            "confidence": "2",
+            "description": "<p>Permissions Policy Header is an added layer of security that helps to restrict from unauthorized access or usage of browser/client features by web resources. This policy ensures the user privacy by limiting or specifying the features of the browsers can be used by the web resources. Permissions Policy provides a set of standard HTTP headers that allow website owners to limit which features of browsers can be used by the page such as camera, microphone, location, full screen etc.</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "",
+            "plugin_id": "10063",
+            "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Permissions-Policy</p><p>https://developer.chrome.com/blog/feature-policy/</p><p>https://scotthelme.co.uk/a-new-security-header-feature-policy/</p><p>https://w3c.github.io/webappsec-feature-policy/</p><p>https://www.smashingmagazine.com/2018/12/feature-policy/</p>",
+            "risk_description": "Low (Medium)",
+            "scanner_risk": "LOW",
+            "solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Permissions-Policy header.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/robots.txt",
+            "verified": false
+          }
+        },
+        {
+          "id": 166,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 14:23:51.648687",
+          "data": {
+            "alert_name": "Permissions Policy Header Not Set",
+            "confidence": "2",
+            "description": "<p>Permissions Policy Header is an added layer of security that helps to restrict from unauthorized access or usage of browser/client features by web resources. This policy ensures the user privacy by limiting or specifying the features of the browsers can be used by the web resources. Permissions Policy provides a set of standard HTTP headers that allow website owners to limit which features of browsers can be used by the page such as camera, microphone, location, full screen etc.</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "",
+            "plugin_id": "10063",
+            "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Permissions-Policy</p><p>https://developer.chrome.com/blog/feature-policy/</p><p>https://scotthelme.co.uk/a-new-security-header-feature-policy/</p><p>https://w3c.github.io/webappsec-feature-policy/</p><p>https://www.smashingmagazine.com/2018/12/feature-policy/</p>",
+            "risk_description": "Low (Medium)",
+            "scanner_risk": "LOW",
+            "solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Permissions-Policy header.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/sitemap.xml",
+            "verified": false
+          }
+        },
+        {
+          "id": 167,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 14:23:51.648845",
+          "data": {
+            "alert_name": "Permissions Policy Header Not Set",
+            "confidence": "2",
+            "description": "<p>Permissions Policy Header is an added layer of security that helps to restrict from unauthorized access or usage of browser/client features by web resources. This policy ensures the user privacy by limiting or specifying the features of the browsers can be used by the web resources. Permissions Policy provides a set of standard HTTP headers that allow website owners to limit which features of browsers can be used by the page such as camera, microphone, location, full screen etc.</p>",
+            "method": "POST",
+            "observed_evidence": "",
+            "parameter": "",
+            "plugin_id": "10063",
+            "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Permissions-Policy</p><p>https://developer.chrome.com/blog/feature-policy/</p><p>https://scotthelme.co.uk/a-new-security-header-feature-policy/</p><p>https://w3c.github.io/webappsec-feature-policy/</p><p>https://www.smashingmagazine.com/2018/12/feature-policy/</p>",
+            "risk_description": "Low (Medium)",
+            "scanner_risk": "LOW",
+            "solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Permissions-Policy header.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/login",
+            "verified": false
+          }
+        },
+        {
+          "id": 188,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 14:23:51.720107",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Permissions Policy Header Not Set",
+            "observed_status": 200,
+            "plugin_id": "10063",
+            "reason": "Relevant header presence checked against the live response.",
+            "relevant_headers": {
+              "Server": "Werkzeug/3.1.9 Python/3.14.10",
+              "Vary": "Cookie"
+            },
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "OBSERVED_CHARACTERISTIC",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "OBSERVED",
+            "verified_vulnerability": false
+          }
+        },
+        {
+          "id": 189,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 14:23:51.720561",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Permissions Policy Header Not Set",
+            "observed_status": 200,
+            "plugin_id": "10063",
+            "reason": "Relevant header presence checked against the live response.",
+            "relevant_headers": {
+              "Server": "Werkzeug/3.1.9 Python/3.14.10",
+              "Vary": "Cookie"
+            },
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001/login",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "OBSERVED_CHARACTERISTIC",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "OBSERVED",
+            "verified_vulnerability": false
+          }
+        },
+        {
+          "id": 190,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 14:23:51.720917",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Permissions Policy Header Not Set",
+            "observed_status": 404,
+            "plugin_id": "10063",
+            "reason": "Relevant header presence checked against the live response.",
+            "relevant_headers": {
+              "Server": "Werkzeug/3.1.9 Python/3.14.10",
+              "Vary": "Cookie"
+            },
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001/robots.txt",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "OBSERVED_CHARACTERISTIC",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "OBSERVED",
+            "verified_vulnerability": false
+          }
+        },
+        {
+          "id": 191,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 14:23:51.721264",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Permissions Policy Header Not Set",
+            "observed_status": 404,
+            "plugin_id": "10063",
+            "reason": "Relevant header presence checked against the live response.",
+            "relevant_headers": {
+              "Server": "Werkzeug/3.1.9 Python/3.14.10",
+              "Vary": "Cookie"
+            },
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001/sitemap.xml",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "OBSERVED_CHARACTERISTIC",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "OBSERVED",
+            "verified_vulnerability": false
+          }
+        },
+        {
+          "id": 192,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 14:23:51.721618",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Permissions Policy Header Not Set",
+            "observed_status": 200,
+            "plugin_id": "10063",
+            "reason": "Relevant header presence checked against the live response.",
+            "relevant_headers": {
+              "Server": "Werkzeug/3.1.9 Python/3.14.10",
+              "Vary": "Cookie"
+            },
+            "reported_method": "POST",
+            "reported_url": "http://host.docker.internal:5001/login",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "OBSERVED_CHARACTERISTIC",
+            "verification_method": "SAFE_GET_SUBSTITUTE",
+            "verification_outcome": "OBSERVED",
+            "verified_vulnerability": false
+          }
+        }
+      ],
+      "status_history": [],
+      "latest_retest": null
+    },
+    {
+      "id": 35,
+      "title": "ZAP: Authentication Request Identified [Plugin 10111]",
+      "vulnerability_type": "AUTHENTICATION_INFORMATION",
+      "severity": "UNASSESSED",
+      "risk_score": null,
+      "risk_severity": "UNASSESSED",
+      "risk_factors": {},
+      "risk_method": null,
+      "status": "CANDIDATE",
+      "description": "<p>The given request has been identified as an authentication request. The 'Other Info' field contains a set of key=value lines which identify any relevant fields. If the request is in a context which has an Authentication Method set to \"Auto-Detect\" then this rule will change the authentication to match the request identified.</p>\n\nZAP suggested solution:\n<p>This is an informational alert rather than a vulnerability and so there is nothing to fix.</p>",
+      "evidence": [
+        {
+          "id": 168,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 14:23:51.649779",
+          "data": {
+            "alert_name": "Authentication Request Identified",
+            "confidence": "3",
+            "description": "<p>The given request has been identified as an authentication request. The 'Other Info' field contains a set of key=value lines which identify any relevant fields. If the request is in a context which has an Authentication Method set to \"Auto-Detect\" then this rule will change the authentication to match the request identified.</p>",
+            "method": "POST",
+            "observed_evidence": "password",
+            "parameter": "username",
+            "plugin_id": "10111",
+            "reference": "<p>https://www.zaproxy.org/docs/desktop/addons/authentication-helper/auth-req-id/</p>",
+            "risk_description": "Informational (High)",
+            "scanner_risk": "INFO",
+            "solution": "<p>This is an informational alert rather than a vulnerability and so there is nothing to fix.</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/login",
+            "verified": false
+          }
+        },
+        {
+          "id": 200,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 14:23:51.724530",
+          "data": {
+            "actual_request_method": null,
+            "alert_name": "Authentication Request Identified",
+            "observed_status": null,
+            "plugin_id": "10111",
+            "reason": "Skipped POST: no automatic replay of credential-submission or potentially state-changing requests.",
+            "relevant_headers": {},
+            "reported_method": "POST",
+            "reported_url": "http://host.docker.internal:5001/login",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "INFORMATIONAL",
+            "verification_method": "UNKNOWN",
+            "verification_outcome": "INCONCLUSIVE",
+            "verified_vulnerability": false
+          }
+        }
+      ],
+      "status_history": [],
+      "latest_retest": null
+    },
+    {
+      "id": 36,
+      "title": "ZAP: Cross-Origin-Embedder-Policy Header Missing or Invalid [Plugin 90004]",
+      "vulnerability_type": "SECURITY_MISCONFIGURATION",
+      "severity": "UNASSESSED",
+      "risk_score": 25.0,
+      "risk_severity": "LOW",
+      "risk_factors": {
+        "confidence": 2,
+        "exploitability": 2,
+        "impact": 2
+      },
+      "risk_method": "project_preliminary_risk_v1",
+      "status": "CANDIDATE",
+      "description": "<p>Cross-Origin-Embedder-Policy header is a response header that prevents a document from loading any cross-origin resources that don't explicitly grant the document permission (using CORP or CORS).</p>\n\nZAP suggested solution:\n<p>Ensure that the application/web server sets the Cross-Origin-Embedder-Policy header appropriately, and that it sets the Cross-Origin-Embedder-Policy header to 'require-corp' for documents.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that supports the Cross-Origin-Embedder-Policy header (https://caniuse.com/mdn-http_headers_cross-origin-embedder-policy).</p>",
+      "evidence": [
+        {
+          "id": 169,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 14:23:51.651119",
+          "data": {
+            "alert_name": "Cross-Origin-Embedder-Policy Header Missing or Invalid",
+            "confidence": "2",
+            "description": "<p>Cross-Origin-Embedder-Policy header is a response header that prevents a document from loading any cross-origin resources that don't explicitly grant the document permission (using CORP or CORS).</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "Cross-Origin-Embedder-Policy",
+            "plugin_id": "90004",
+            "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cross-Origin-Embedder-Policy</p>",
+            "risk_description": "Low (Medium)",
+            "scanner_risk": "LOW",
+            "solution": "<p>Ensure that the application/web server sets the Cross-Origin-Embedder-Policy header appropriately, and that it sets the Cross-Origin-Embedder-Policy header to 'require-corp' for documents.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that supports the Cross-Origin-Embedder-Policy header (https://caniuse.com/mdn-http_headers_cross-origin-embedder-policy).</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001",
+            "verified": false
+          }
+        },
+        {
+          "id": 170,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 14:23:51.651438",
+          "data": {
+            "alert_name": "Cross-Origin-Embedder-Policy Header Missing or Invalid",
+            "confidence": "2",
+            "description": "<p>Cross-Origin-Embedder-Policy header is a response header that prevents a document from loading any cross-origin resources that don't explicitly grant the document permission (using CORP or CORS).</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "Cross-Origin-Embedder-Policy",
+            "plugin_id": "90004",
+            "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cross-Origin-Embedder-Policy</p>",
+            "risk_description": "Low (Medium)",
+            "scanner_risk": "LOW",
+            "solution": "<p>Ensure that the application/web server sets the Cross-Origin-Embedder-Policy header appropriately, and that it sets the Cross-Origin-Embedder-Policy header to 'require-corp' for documents.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that supports the Cross-Origin-Embedder-Policy header (https://caniuse.com/mdn-http_headers_cross-origin-embedder-policy).</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/login",
+            "verified": false
+          }
+        },
+        {
+          "id": 182,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 14:23:51.718002",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Cross-Origin-Embedder-Policy Header Missing or Invalid",
+            "observed_status": 200,
+            "plugin_id": "90004",
+            "reason": "Relevant header presence checked against the live response.",
+            "relevant_headers": {
+              "Server": "Werkzeug/3.1.9 Python/3.14.10",
+              "Vary": "Cookie"
+            },
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "OBSERVED_CHARACTERISTIC",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "OBSERVED",
+            "verified_vulnerability": false
+          }
+        },
+        {
+          "id": 183,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 14:23:51.718345",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Cross-Origin-Embedder-Policy Header Missing or Invalid",
+            "observed_status": 200,
+            "plugin_id": "90004",
+            "reason": "Relevant header presence checked against the live response.",
+            "relevant_headers": {
+              "Server": "Werkzeug/3.1.9 Python/3.14.10",
+              "Vary": "Cookie"
+            },
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001/login",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "OBSERVED_CHARACTERISTIC",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "OBSERVED",
+            "verified_vulnerability": false
+          }
+        }
+      ],
+      "status_history": [],
+      "latest_retest": null
+    },
+    {
+      "id": 37,
+      "title": "ZAP: Cross-Origin-Opener-Policy Header Missing or Invalid [Plugin 90004]",
+      "vulnerability_type": "SECURITY_MISCONFIGURATION",
+      "severity": "UNASSESSED",
+      "risk_score": 25.0,
+      "risk_severity": "LOW",
+      "risk_factors": {
+        "confidence": 2,
+        "exploitability": 2,
+        "impact": 2
+      },
+      "risk_method": "project_preliminary_risk_v1",
+      "status": "CANDIDATE",
+      "description": "<p>Cross-Origin-Opener-Policy header is a response header that allows a site to control if others included documents share the same browsing context. Sharing the same browsing context with untrusted documents might lead to data leak.</p>\n\nZAP suggested solution:\n<p>Ensure that the application/web server sets the Cross-Origin-Opener-Policy header appropriately, and that it sets the Cross-Origin-Opener-Policy header to 'same-origin' for documents.</p><p>'same-origin-allow-popups' is considered as less secured and should be avoided.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that supports the Cross-Origin-Opener-Policy header (https://caniuse.com/mdn-http_headers_cross-origin-opener-policy).</p>",
+      "evidence": [
+        {
+          "id": 171,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 14:23:51.652466",
+          "data": {
+            "alert_name": "Cross-Origin-Opener-Policy Header Missing or Invalid",
+            "confidence": "2",
+            "description": "<p>Cross-Origin-Opener-Policy header is a response header that allows a site to control if others included documents share the same browsing context. Sharing the same browsing context with untrusted documents might lead to data leak.</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "Cross-Origin-Opener-Policy",
+            "plugin_id": "90004",
+            "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cross-Origin-Opener-Policy</p>",
+            "risk_description": "Low (Medium)",
+            "scanner_risk": "LOW",
+            "solution": "<p>Ensure that the application/web server sets the Cross-Origin-Opener-Policy header appropriately, and that it sets the Cross-Origin-Opener-Policy header to 'same-origin' for documents.</p><p>'same-origin-allow-popups' is considered as less secured and should be avoided.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that supports the Cross-Origin-Opener-Policy header (https://caniuse.com/mdn-http_headers_cross-origin-opener-policy).</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001",
+            "verified": false
+          }
+        },
+        {
+          "id": 172,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 14:23:51.652644",
+          "data": {
+            "alert_name": "Cross-Origin-Opener-Policy Header Missing or Invalid",
+            "confidence": "2",
+            "description": "<p>Cross-Origin-Opener-Policy header is a response header that allows a site to control if others included documents share the same browsing context. Sharing the same browsing context with untrusted documents might lead to data leak.</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "Cross-Origin-Opener-Policy",
+            "plugin_id": "90004",
+            "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cross-Origin-Opener-Policy</p>",
+            "risk_description": "Low (Medium)",
+            "scanner_risk": "LOW",
+            "solution": "<p>Ensure that the application/web server sets the Cross-Origin-Opener-Policy header appropriately, and that it sets the Cross-Origin-Opener-Policy header to 'same-origin' for documents.</p><p>'same-origin-allow-popups' is considered as less secured and should be avoided.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that supports the Cross-Origin-Opener-Policy header (https://caniuse.com/mdn-http_headers_cross-origin-opener-policy).</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/login",
+            "verified": false
+          }
+        },
+        {
+          "id": 184,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 14:23:51.718691",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Cross-Origin-Opener-Policy Header Missing or Invalid",
+            "observed_status": 200,
+            "plugin_id": "90004",
+            "reason": "Relevant header presence checked against the live response.",
+            "relevant_headers": {
+              "Server": "Werkzeug/3.1.9 Python/3.14.10",
+              "Vary": "Cookie"
+            },
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "OBSERVED_CHARACTERISTIC",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "OBSERVED",
+            "verified_vulnerability": false
+          }
+        },
+        {
+          "id": 185,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 14:23:51.719044",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Cross-Origin-Opener-Policy Header Missing or Invalid",
+            "observed_status": 200,
+            "plugin_id": "90004",
+            "reason": "Relevant header presence checked against the live response.",
+            "relevant_headers": {
+              "Server": "Werkzeug/3.1.9 Python/3.14.10",
+              "Vary": "Cookie"
+            },
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001/login",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "OBSERVED_CHARACTERISTIC",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "OBSERVED",
+            "verified_vulnerability": false
+          }
+        }
+      ],
+      "status_history": [],
+      "latest_retest": null
+    },
+    {
+      "id": 38,
+      "title": "ZAP: Cross-Origin-Resource-Policy Header Missing or Invalid [Plugin 90004]",
+      "vulnerability_type": "SECURITY_MISCONFIGURATION",
+      "severity": "UNASSESSED",
+      "risk_score": 25.0,
+      "risk_severity": "LOW",
+      "risk_factors": {
+        "confidence": 2,
+        "exploitability": 2,
+        "impact": 2
+      },
+      "risk_method": "project_preliminary_risk_v1",
+      "status": "CANDIDATE",
+      "description": "<p>Cross-Origin-Resource-Policy header is an opt-in header designed to counter side-channels attacks like Spectre. Resource should be specifically set as shareable amongst different origins.</p>\n\nZAP suggested solution:\n<p>Ensure that the application/web server sets the Cross-Origin-Resource-Policy header appropriately, and that it sets the Cross-Origin-Resource-Policy header to 'same-origin' for all web pages.</p><p>'same-site' is considered as less secured and should be avoided.</p><p>If resources must be shared, set the header to 'cross-origin'.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that supports the Cross-Origin-Resource-Policy header (https://caniuse.com/mdn-http_headers_cross-origin-resource-policy).</p>",
+      "evidence": [
+        {
+          "id": 173,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 14:23:51.653642",
+          "data": {
+            "alert_name": "Cross-Origin-Resource-Policy Header Missing or Invalid",
+            "confidence": "2",
+            "description": "<p>Cross-Origin-Resource-Policy header is an opt-in header designed to counter side-channels attacks like Spectre. Resource should be specifically set as shareable amongst different origins.</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "Cross-Origin-Resource-Policy",
+            "plugin_id": "90004",
+            "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cross-Origin-Embedder-Policy</p>",
+            "risk_description": "Low (Medium)",
+            "scanner_risk": "LOW",
+            "solution": "<p>Ensure that the application/web server sets the Cross-Origin-Resource-Policy header appropriately, and that it sets the Cross-Origin-Resource-Policy header to 'same-origin' for all web pages.</p><p>'same-site' is considered as less secured and should be avoided.</p><p>If resources must be shared, set the header to 'cross-origin'.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that supports the Cross-Origin-Resource-Policy header (https://caniuse.com/mdn-http_headers_cross-origin-resource-policy).</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001",
+            "verified": false
+          }
+        },
+        {
+          "id": 174,
+          "type": "zap_alert_instance",
+          "created_at": "2026-11-03 14:23:51.653820",
+          "data": {
+            "alert_name": "Cross-Origin-Resource-Policy Header Missing or Invalid",
+            "confidence": "2",
+            "description": "<p>Cross-Origin-Resource-Policy header is an opt-in header designed to counter side-channels attacks like Spectre. Resource should be specifically set as shareable amongst different origins.</p>",
+            "method": "GET",
+            "observed_evidence": "",
+            "parameter": "Cross-Origin-Resource-Policy",
+            "plugin_id": "90004",
+            "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cross-Origin-Embedder-Policy</p>",
+            "risk_description": "Low (Medium)",
+            "scanner_risk": "LOW",
+            "solution": "<p>Ensure that the application/web server sets the Cross-Origin-Resource-Policy header appropriately, and that it sets the Cross-Origin-Resource-Policy header to 'same-origin' for all web pages.</p><p>'same-site' is considered as less secured and should be avoided.</p><p>If resources must be shared, set the header to 'cross-origin'.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that supports the Cross-Origin-Resource-Policy header (https://caniuse.com/mdn-http_headers_cross-origin-resource-policy).</p>",
+            "source": "OWASP_ZAP",
+            "url": "http://host.docker.internal:5001/login",
+            "verified": false
+          }
+        },
+        {
+          "id": 186,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 14:23:51.719398",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Cross-Origin-Resource-Policy Header Missing or Invalid",
+            "observed_status": 200,
+            "plugin_id": "90004",
+            "reason": "Relevant header presence checked against the live response.",
+            "relevant_headers": {
+              "Server": "Werkzeug/3.1.9 Python/3.14.10",
+              "Vary": "Cookie"
+            },
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "OBSERVED_CHARACTERISTIC",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "OBSERVED",
+            "verified_vulnerability": false
+          }
+        },
+        {
+          "id": 187,
+          "type": "zap_live_verification",
+          "created_at": "2026-11-03 14:23:51.719746",
+          "data": {
+            "actual_request_method": "GET",
+            "alert_name": "Cross-Origin-Resource-Policy Header Missing or Invalid",
+            "observed_status": 200,
+            "plugin_id": "90004",
+            "reason": "Relevant header presence checked against the live response.",
+            "relevant_headers": {
+              "Server": "Werkzeug/3.1.9 Python/3.14.10",
+              "Vary": "Cookie"
+            },
+            "reported_method": "GET",
+            "reported_url": "http://host.docker.internal:5001/login",
+            "source": "OWASP_ZAP_LIVE_VERIFICATION",
+            "triage_category": "OBSERVED_CHARACTERISTIC",
+            "verification_method": "ORIGINAL_SAFE_METHOD",
+            "verification_outcome": "OBSERVED",
+            "verified_vulnerability": false
+          }
+        }
+      ],
+      "status_history": [],
+      "latest_retest": null
+    }
+  ],
+  "attack_paths": [],
+  "correlation_analysis": {
+    "mode": "read-only correlation",
+    "assessment_id": 3,
+    "findings_processed": 13,
+    "relationships": [
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 28,
+        "source_evidence_id": 144,
+        "related_evidence_id": 180,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 28,
+        "source_evidence_id": 145,
+        "related_evidence_id": 181,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SHARED_ENDPOINT_GROUP",
+        "endpoint": "/",
+        "finding_ids": [
+          28,
+          29,
+          30,
+          31,
+          33,
+          34,
+          36,
+          37,
+          38
+        ],
+        "evidence_ids_by_finding": {
+          "28": [
+            144
+          ],
+          "29": [
+            146
+          ],
+          "30": [
+            148
+          ],
+          "31": [
+            153
+          ],
+          "33": [
+            159
+          ],
+          "34": [
+            163
+          ],
+          "36": [
+            169
+          ],
+          "37": [
+            171
+          ],
+          "38": [
+            173
+          ]
+        },
+        "match_basis": "multiple findings have evidence for this endpoint",
+        "verified_relationship": false,
+        "note": "Endpoint-level grouping only; does not establish a common root cause, exploitability, or an attack path."
+      },
+      {
+        "type": "SHARED_ENDPOINT_GROUP",
+        "endpoint": "/login",
+        "finding_ids": [
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38
+        ],
+        "evidence_ids_by_finding": {
+          "28": [
+            145
+          ],
+          "29": [
+            147
+          ],
+          "30": [
+            149,
+            152
+          ],
+          "31": [
+            154,
+            157
+          ],
+          "32": [
+            158
+          ],
+          "33": [
+            160
+          ],
+          "34": [
+            164,
+            167
+          ],
+          "35": [
+            168
+          ],
+          "36": [
+            170
+          ],
+          "37": [
+            172
+          ],
+          "38": [
+            174
+          ]
+        },
+        "match_basis": "multiple findings have evidence for this endpoint",
+        "verified_relationship": false,
+        "note": "Endpoint-level grouping only; does not establish a common root cause, exploitability, or an attack path."
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 29,
+        "source_evidence_id": 146,
+        "related_evidence_id": 198,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 29,
+        "source_evidence_id": 147,
+        "related_evidence_id": 199,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 30,
+        "source_evidence_id": 148,
+        "related_evidence_id": 193,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 30,
+        "source_evidence_id": 149,
+        "related_evidence_id": 194,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 30,
+        "source_evidence_id": 150,
+        "related_evidence_id": 195,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 30,
+        "source_evidence_id": 151,
+        "related_evidence_id": 196,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 30,
+        "source_evidence_id": 152,
+        "related_evidence_id": 197,
+        "match_basis": "same URL; GET substitute for POST; original POST response not verified"
+      },
+      {
+        "type": "SHARED_ENDPOINT_GROUP",
+        "endpoint": "/robots.txt",
+        "finding_ids": [
+          30,
+          31,
+          33,
+          34
+        ],
+        "evidence_ids_by_finding": {
+          "30": [
+            150
+          ],
+          "31": [
+            155
+          ],
+          "33": [
+            161
+          ],
+          "34": [
+            165
+          ]
+        },
+        "match_basis": "multiple findings have evidence for this endpoint",
+        "verified_relationship": false,
+        "note": "Endpoint-level grouping only; does not establish a common root cause, exploitability, or an attack path."
+      },
+      {
+        "type": "SHARED_ENDPOINT_GROUP",
+        "endpoint": "/sitemap.xml",
+        "finding_ids": [
+          30,
+          31,
+          33,
+          34
+        ],
+        "evidence_ids_by_finding": {
+          "30": [
+            151
+          ],
+          "31": [
+            156
+          ],
+          "33": [
+            162
+          ],
+          "34": [
+            166
+          ]
+        },
+        "match_basis": "multiple findings have evidence for this endpoint",
+        "verified_relationship": false,
+        "note": "Endpoint-level grouping only; does not establish a common root cause, exploitability, or an attack path."
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 31,
+        "source_evidence_id": 153,
+        "related_evidence_id": 175,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 31,
+        "source_evidence_id": 154,
+        "related_evidence_id": 176,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 31,
+        "source_evidence_id": 155,
+        "related_evidence_id": 177,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 31,
+        "source_evidence_id": 156,
+        "related_evidence_id": 178,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 31,
+        "source_evidence_id": 157,
+        "related_evidence_id": 179,
+        "match_basis": "same URL; GET substitute for POST; original POST response not verified"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 32,
+        "source_evidence_id": 158,
+        "related_evidence_id": 201,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 33,
+        "source_evidence_id": 159,
+        "related_evidence_id": 202,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 33,
+        "source_evidence_id": 160,
+        "related_evidence_id": 203,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 33,
+        "source_evidence_id": 161,
+        "related_evidence_id": 204,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 33,
+        "source_evidence_id": 162,
+        "related_evidence_id": 205,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 34,
+        "source_evidence_id": 163,
+        "related_evidence_id": 188,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 34,
+        "source_evidence_id": 164,
+        "related_evidence_id": 189,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 34,
+        "source_evidence_id": 165,
+        "related_evidence_id": 190,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 34,
+        "source_evidence_id": 166,
+        "related_evidence_id": 191,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 34,
+        "source_evidence_id": 167,
+        "related_evidence_id": 192,
+        "match_basis": "same URL; GET substitute for POST; original POST response not verified"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 35,
+        "source_evidence_id": 168,
+        "related_evidence_id": 200,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 36,
+        "source_evidence_id": 169,
+        "related_evidence_id": 182,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 36,
+        "source_evidence_id": 170,
+        "related_evidence_id": 183,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 37,
+        "source_evidence_id": 171,
+        "related_evidence_id": 184,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 37,
+        "source_evidence_id": 172,
+        "related_evidence_id": 185,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 38,
+        "source_evidence_id": 173,
+        "related_evidence_id": 186,
+        "match_basis": "same plugin, URL and method"
+      },
+      {
+        "type": "SCANNER_TO_LIVE_CHECK",
+        "finding_id": 38,
+        "source_evidence_id": 174,
+        "related_evidence_id": 187,
+        "match_basis": "same plugin, URL and method"
+      }
+    ],
+    "notes": [
+      "Relationships are candidates, not proof of exploitability.",
+      "No findings or evidence records are merged or deleted.",
+      "Safe GET substitutes do not prove the original POST response."
+    ]
+  },
+  "zap_live_verification": {
+    "assessment_id": 3,
+    "results": [
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Missing Anti-clickjacking Header",
+        "observed_status": 200,
+        "plugin_id": "10020",
+        "reason": "Neither X-Frame-Options nor CSP frame-ancestors was observed.",
+        "relevant_headers": {
+          "Server": "Werkzeug/3.1.9 Python/3.14.10",
+          "Vary": "Cookie"
+        },
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "OBSERVED_CHARACTERISTIC",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "OBSERVED",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Missing Anti-clickjacking Header",
+        "observed_status": 200,
+        "plugin_id": "10020",
+        "reason": "Neither X-Frame-Options nor CSP frame-ancestors was observed.",
+        "relevant_headers": {
+          "Server": "Werkzeug/3.1.9 Python/3.14.10",
+          "Vary": "Cookie"
+        },
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001/login",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "OBSERVED_CHARACTERISTIC",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "OBSERVED",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "X-Content-Type-Options Header Missing",
+        "observed_status": 200,
+        "plugin_id": "10021",
+        "reason": "Relevant header presence checked against the live response.",
+        "relevant_headers": {
+          "Server": "Werkzeug/3.1.9 Python/3.14.10",
+          "Vary": "Cookie"
+        },
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "OBSERVED_CHARACTERISTIC",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "OBSERVED",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "X-Content-Type-Options Header Missing",
+        "observed_status": 200,
+        "plugin_id": "10021",
+        "reason": "Relevant header presence checked against the live response.",
+        "relevant_headers": {
+          "Server": "Werkzeug/3.1.9 Python/3.14.10",
+          "Vary": "Cookie"
+        },
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001/login",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "OBSERVED_CHARACTERISTIC",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "OBSERVED",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+        "observed_status": 200,
+        "plugin_id": "10036",
+        "reason": "Server header present: Werkzeug/3.1.9 Python/3.14.10",
+        "relevant_headers": {
+          "Server": "Werkzeug/3.1.9 Python/3.14.10",
+          "Vary": "Cookie"
+        },
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "OBSERVED_CHARACTERISTIC",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "OBSERVED",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+        "observed_status": 200,
+        "plugin_id": "10036",
+        "reason": "Server header present: Werkzeug/3.1.9 Python/3.14.10",
+        "relevant_headers": {
+          "Server": "Werkzeug/3.1.9 Python/3.14.10",
+          "Vary": "Cookie"
+        },
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001/login",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "OBSERVED_CHARACTERISTIC",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "OBSERVED",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+        "observed_status": 404,
+        "plugin_id": "10036",
+        "reason": "Server header present: Werkzeug/3.1.9 Python/3.14.10",
+        "relevant_headers": {
+          "Server": "Werkzeug/3.1.9 Python/3.14.10",
+          "Vary": "Cookie"
+        },
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001/robots.txt",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "OBSERVED_CHARACTERISTIC",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "OBSERVED",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+        "observed_status": 404,
+        "plugin_id": "10036",
+        "reason": "Server header present: Werkzeug/3.1.9 Python/3.14.10",
+        "relevant_headers": {
+          "Server": "Werkzeug/3.1.9 Python/3.14.10",
+          "Vary": "Cookie"
+        },
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001/sitemap.xml",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "OBSERVED_CHARACTERISTIC",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "OBSERVED",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+        "observed_status": 200,
+        "plugin_id": "10036",
+        "reason": "Server header present: Werkzeug/3.1.9 Python/3.14.10",
+        "relevant_headers": {
+          "Server": "Werkzeug/3.1.9 Python/3.14.10",
+          "Vary": "Cookie"
+        },
+        "reported_method": "POST",
+        "reported_url": "http://host.docker.internal:5001/login",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "OBSERVED_CHARACTERISTIC",
+        "verification_method": "SAFE_GET_SUBSTITUTE",
+        "verification_outcome": "OBSERVED",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Content Security Policy (CSP) Header Not Set",
+        "observed_status": 200,
+        "plugin_id": "10038",
+        "reason": "Relevant header presence checked against the live response.",
+        "relevant_headers": {
+          "Server": "Werkzeug/3.1.9 Python/3.14.10",
+          "Vary": "Cookie"
+        },
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "OBSERVED_CHARACTERISTIC",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "OBSERVED",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Content Security Policy (CSP) Header Not Set",
+        "observed_status": 200,
+        "plugin_id": "10038",
+        "reason": "Relevant header presence checked against the live response.",
+        "relevant_headers": {
+          "Server": "Werkzeug/3.1.9 Python/3.14.10",
+          "Vary": "Cookie"
+        },
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001/login",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "OBSERVED_CHARACTERISTIC",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "OBSERVED",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Content Security Policy (CSP) Header Not Set",
+        "observed_status": 404,
+        "plugin_id": "10038",
+        "reason": "Relevant header presence checked against the live response.",
+        "relevant_headers": {
+          "Server": "Werkzeug/3.1.9 Python/3.14.10",
+          "Vary": "Cookie"
+        },
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001/robots.txt",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "OBSERVED_CHARACTERISTIC",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "OBSERVED",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Content Security Policy (CSP) Header Not Set",
+        "observed_status": 404,
+        "plugin_id": "10038",
+        "reason": "Relevant header presence checked against the live response.",
+        "relevant_headers": {
+          "Server": "Werkzeug/3.1.9 Python/3.14.10",
+          "Vary": "Cookie"
+        },
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001/sitemap.xml",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "OBSERVED_CHARACTERISTIC",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "OBSERVED",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Content Security Policy (CSP) Header Not Set",
+        "observed_status": 200,
+        "plugin_id": "10038",
+        "reason": "Relevant header presence checked against the live response.",
+        "relevant_headers": {
+          "Server": "Werkzeug/3.1.9 Python/3.14.10",
+          "Vary": "Cookie"
+        },
+        "reported_method": "POST",
+        "reported_url": "http://host.docker.internal:5001/login",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "OBSERVED_CHARACTERISTIC",
+        "verification_method": "SAFE_GET_SUBSTITUTE",
+        "verification_outcome": "OBSERVED",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": null,
+        "alert_name": "Non-Storable Content",
+        "observed_status": null,
+        "plugin_id": "10049",
+        "reason": "Skipped POST: no automatic replay of credential-submission or potentially state-changing requests.",
+        "relevant_headers": {},
+        "reported_method": "POST",
+        "reported_url": "http://host.docker.internal:5001/login",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "INCONCLUSIVE",
+        "verification_method": "UNKNOWN",
+        "verification_outcome": "INCONCLUSIVE",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Storable and Cacheable Content",
+        "observed_status": 200,
+        "plugin_id": "10049",
+        "reason": "Review Cache-Control, response content sensitivity, authentication state, and caching requirements.",
+        "relevant_headers": {
+          "Server": "Werkzeug/3.1.9 Python/3.14.10",
+          "Vary": "Cookie"
+        },
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "NEEDS_CONTEXT",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "NEEDS_CONTEXT",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Storable and Cacheable Content",
+        "observed_status": 200,
+        "plugin_id": "10049",
+        "reason": "Review Cache-Control, response content sensitivity, authentication state, and caching requirements.",
+        "relevant_headers": {
+          "Server": "Werkzeug/3.1.9 Python/3.14.10",
+          "Vary": "Cookie"
+        },
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001/login",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "NEEDS_CONTEXT",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "NEEDS_CONTEXT",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Storable and Cacheable Content",
+        "observed_status": 404,
+        "plugin_id": "10049",
+        "reason": "Review Cache-Control, response content sensitivity, authentication state, and caching requirements.",
+        "relevant_headers": {
+          "Server": "Werkzeug/3.1.9 Python/3.14.10",
+          "Vary": "Cookie"
+        },
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001/robots.txt",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "NEEDS_CONTEXT",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "NEEDS_CONTEXT",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Storable and Cacheable Content",
+        "observed_status": 404,
+        "plugin_id": "10049",
+        "reason": "Review Cache-Control, response content sensitivity, authentication state, and caching requirements.",
+        "relevant_headers": {
+          "Server": "Werkzeug/3.1.9 Python/3.14.10",
+          "Vary": "Cookie"
+        },
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001/sitemap.xml",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "NEEDS_CONTEXT",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "NEEDS_CONTEXT",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Permissions Policy Header Not Set",
+        "observed_status": 200,
+        "plugin_id": "10063",
+        "reason": "Relevant header presence checked against the live response.",
+        "relevant_headers": {
+          "Server": "Werkzeug/3.1.9 Python/3.14.10",
+          "Vary": "Cookie"
+        },
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "OBSERVED_CHARACTERISTIC",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "OBSERVED",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Permissions Policy Header Not Set",
+        "observed_status": 200,
+        "plugin_id": "10063",
+        "reason": "Relevant header presence checked against the live response.",
+        "relevant_headers": {
+          "Server": "Werkzeug/3.1.9 Python/3.14.10",
+          "Vary": "Cookie"
+        },
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001/login",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "OBSERVED_CHARACTERISTIC",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "OBSERVED",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Permissions Policy Header Not Set",
+        "observed_status": 404,
+        "plugin_id": "10063",
+        "reason": "Relevant header presence checked against the live response.",
+        "relevant_headers": {
+          "Server": "Werkzeug/3.1.9 Python/3.14.10",
+          "Vary": "Cookie"
+        },
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001/robots.txt",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "OBSERVED_CHARACTERISTIC",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "OBSERVED",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Permissions Policy Header Not Set",
+        "observed_status": 404,
+        "plugin_id": "10063",
+        "reason": "Relevant header presence checked against the live response.",
+        "relevant_headers": {
+          "Server": "Werkzeug/3.1.9 Python/3.14.10",
+          "Vary": "Cookie"
+        },
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001/sitemap.xml",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "OBSERVED_CHARACTERISTIC",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "OBSERVED",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Permissions Policy Header Not Set",
+        "observed_status": 200,
+        "plugin_id": "10063",
+        "reason": "Relevant header presence checked against the live response.",
+        "relevant_headers": {
+          "Server": "Werkzeug/3.1.9 Python/3.14.10",
+          "Vary": "Cookie"
+        },
+        "reported_method": "POST",
+        "reported_url": "http://host.docker.internal:5001/login",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "OBSERVED_CHARACTERISTIC",
+        "verification_method": "SAFE_GET_SUBSTITUTE",
+        "verification_outcome": "OBSERVED",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": null,
+        "alert_name": "Authentication Request Identified",
+        "observed_status": null,
+        "plugin_id": "10111",
+        "reason": "Skipped POST: no automatic replay of credential-submission or potentially state-changing requests.",
+        "relevant_headers": {},
+        "reported_method": "POST",
+        "reported_url": "http://host.docker.internal:5001/login",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "INFORMATIONAL",
+        "verification_method": "UNKNOWN",
+        "verification_outcome": "INCONCLUSIVE",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Cross-Origin-Embedder-Policy Header Missing or Invalid",
+        "observed_status": 200,
+        "plugin_id": "90004",
+        "reason": "Relevant header presence checked against the live response.",
+        "relevant_headers": {
+          "Server": "Werkzeug/3.1.9 Python/3.14.10",
+          "Vary": "Cookie"
+        },
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "OBSERVED_CHARACTERISTIC",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "OBSERVED",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Cross-Origin-Embedder-Policy Header Missing or Invalid",
+        "observed_status": 200,
+        "plugin_id": "90004",
+        "reason": "Relevant header presence checked against the live response.",
+        "relevant_headers": {
+          "Server": "Werkzeug/3.1.9 Python/3.14.10",
+          "Vary": "Cookie"
+        },
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001/login",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "OBSERVED_CHARACTERISTIC",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "OBSERVED",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Cross-Origin-Opener-Policy Header Missing or Invalid",
+        "observed_status": 200,
+        "plugin_id": "90004",
+        "reason": "Relevant header presence checked against the live response.",
+        "relevant_headers": {
+          "Server": "Werkzeug/3.1.9 Python/3.14.10",
+          "Vary": "Cookie"
+        },
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "OBSERVED_CHARACTERISTIC",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "OBSERVED",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Cross-Origin-Opener-Policy Header Missing or Invalid",
+        "observed_status": 200,
+        "plugin_id": "90004",
+        "reason": "Relevant header presence checked against the live response.",
+        "relevant_headers": {
+          "Server": "Werkzeug/3.1.9 Python/3.14.10",
+          "Vary": "Cookie"
+        },
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001/login",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "OBSERVED_CHARACTERISTIC",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "OBSERVED",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Cross-Origin-Resource-Policy Header Missing or Invalid",
+        "observed_status": 200,
+        "plugin_id": "90004",
+        "reason": "Relevant header presence checked against the live response.",
+        "relevant_headers": {
+          "Server": "Werkzeug/3.1.9 Python/3.14.10",
+          "Vary": "Cookie"
+        },
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "OBSERVED_CHARACTERISTIC",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "OBSERVED",
+        "verified_vulnerability": false
+      },
+      {
+        "actual_request_method": "GET",
+        "alert_name": "Cross-Origin-Resource-Policy Header Missing or Invalid",
+        "observed_status": 200,
+        "plugin_id": "90004",
+        "reason": "Relevant header presence checked against the live response.",
+        "relevant_headers": {
+          "Server": "Werkzeug/3.1.9 Python/3.14.10",
+          "Vary": "Cookie"
+        },
+        "reported_method": "GET",
+        "reported_url": "http://host.docker.internal:5001/login",
+        "source": "OWASP_ZAP_LIVE_VERIFICATION",
+        "triage_category": "OBSERVED_CHARACTERISTIC",
+        "verification_method": "ORIGINAL_SAFE_METHOD",
+        "verification_outcome": "OBSERVED",
+        "verified_vulnerability": false
+      }
+    ]
+  },
+  "limitations": [
+    "Candidate findings are not automatically confirmed vulnerabilities.",
+    "Observed response characteristics do not independently prove exploitability.",
+    "Some scanner checks may require authenticated testing or manual review.",
+    "Correlation between records does not by itself establish a common root cause.",
+    "Attack paths remain candidates unless independently verified."
+  ]
+}

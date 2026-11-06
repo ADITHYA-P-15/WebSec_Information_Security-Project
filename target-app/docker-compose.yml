@@ -1,0 +1,10 @@
+services:
+  target-app:
+    build: .
+    container_name: security-target
+    environment:
+      - SECURITY_LAB_CONTAINER=1
+    ports:
+      - "127.0.0.1:5001:5001"
+    volumes:
+      - ./instance:/app/instance

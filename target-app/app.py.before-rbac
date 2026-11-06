@@ -1,0 +1,274 @@
+from flask import Flask, jsonify, request, redirect, url_for
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import (
+    LoginManager,
+    UserMixin,
+    login_user,
+    logout_user,
+    login_required,
+    current_user
+)
+from werkzeug.security import generate_password_hash, check_password_hash
+
+app = Flask(__name__)
+
+app.config["SECRET_KEY"] = "security-lab-secret-key"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///security_lab.db"
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+db = SQLAlchemy(app)
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = "login"
+
+
+class User(UserMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    password = db.Column(db.String(255), nullable=False)
+    role = db.Column(db.String(20), nullable=False, default="user")
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+
+@app.route("/")
+def home():
+    return """
+    <h1>Security Assessment Target</h1>
+
+    <p>Security testing laboratory application.</p>
+
+    <a href="/login">Login</a>
+    """
+
+
+@app.route("/health")
+def health():
+    return jsonify({
+        "status": "ok",
+        "application": "security-assessment-target"
+    })
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+
+    if request.method == "GET":
+        return """
+        <h2>Login</h2>
+
+        <form method="POST">
+
+            <label>Username:</label>
+            <input name="username">
+
+            <br><br>
+
+            <label>Password:</label>
+            <input type="password" name="password">
+
+            <br><br>
+
+            <button type="submit">Login</button>
+
+        </form>
+        """
+
+    username = request.form.get("username")
+    password = request.form.get("password")
+
+    user = User.query.filter_by(username=username).first()
+
+    if user and check_password_hash(user.password, password):
+
+        login_user(user)
+
+        return redirect(url_for("dashboard"))
+
+    return "Invalid username or password", 401
+
+
+@app.route("/logout")
+@login_required
+def logout():
+
+    logout_user()
+
+    return redirect(url_for("home"))
+
+
+@app.route("/dashboard")
+@login_required
+def dashboard():
+
+    return f"""
+    <h1>Dashboard</h1>
+
+    <p>Welcome, {current_user.username}</p>
+
+    <p>Role: {current_user.role}</p>
+
+    <a href="/profile">Profile</a>
+    <br>
+    <a href="/logout">Logout</a>
+    """
+
+
+@app.route("/profile")
+@login_required
+def profile():
+
+    return jsonify({
+        "id": current_user.id,
+        "username": current_user.username,
+        "role": current_user.role
+    })
+
+@app.route("/orders")
+@login_required
+def orders():
+
+    user_orders = Order.query.filter_by(
+        user_id=current_user.id
+    ).all()
+
+    return jsonify([
+        {
+            "id": order.id,
+            "product": order.product,
+            "amount": order.amount
+        }
+        for order in user_orders
+    ])
+
+@app.route("/api/orders/<int:order_id>")
+@login_required
+def get_order(order_id):
+
+    order = Order.query.get_or_404(order_id)
+
+    return jsonify({
+        "id": order.id,
+        "product": order.product,
+        "amount": order.amount,
+        "user_id": order.user_id
+    })
+
+@app.route("/admin/users")
+@login_required
+def admin_users():
+
+    users = User.query.all()
+
+    return jsonify([
+        {
+            "id": user.id,
+            "username": user.username,
+            "role": user.role
+        }
+        for user in users
+    ])
+
+@app.route("/api/admin/reports")
+@login_required
+def admin_reports():
+
+    total_orders = Order.query.count()
+
+    total_revenue = sum(
+        order.amount for order in Order.query.all()
+    )
+
+    return jsonify({
+        "total_orders": total_orders,
+        "total_revenue": total_revenue
+    })
+class Order(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    product = db.Column(db.String(100), nullable=False)
+    amount = db.Column(db.Float, nullable=False)
+
+    user_id = db.Column(
+        db.Integer,
+        db.ForeignKey("user.id"),
+        nullable=False
+    )
+
+    user = db.relationship(
+        "User",
+        backref=db.backref("orders", lazy=True)
+    )
+
+
+def initialize_database():
+
+    db.create_all()
+
+    if User.query.count() == 0:
+
+        admin = User(
+            username="admin",
+            password=generate_password_hash("admin123"),
+            role="admin"
+        )
+
+        alice = User(
+            username="alice",
+            password=generate_password_hash("alice123"),
+            role="user"
+        )
+
+        bob = User(
+            username="bob",
+            password=generate_password_hash("bob123"),
+            role="user"
+        )
+
+        db.session.add_all([admin, alice, bob])
+        db.session.commit()
+
+        orders = [
+            Order(
+                product="Laptop",
+                amount=75000,
+                user_id=alice.id
+            ),
+
+            Order(
+                product="Headphones",
+                amount=5000,
+                user_id=alice.id
+            ),
+
+            Order(
+                product="Monitor",
+                amount=25000,
+                user_id=bob.id
+            ),
+
+            Order(
+                product="Keyboard",
+                amount=3000,
+                user_id=bob.id
+            )
+        ]
+
+        db.session.add_all(orders)
+        db.session.commit()
+
+
+
+if __name__ == "__main__":
+
+    with app.app_context():
+        initialize_database()
+
+    app.run(
+        host="0.0.0.0",
+        port=5001,
+        debug=True
+    )

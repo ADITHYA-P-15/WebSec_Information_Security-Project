@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Browse Northstar Supply's workspace collection and manage your orders.">
+  <title>Northstar Supply: Workspace collection</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,500..800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/store.css">
+  <style>html,body{overflow-x:clip} :focus-visible{outline:2px solid var(--color-focus);outline-offset:2px} button:active{transform:translateY(1px)} button:disabled{opacity:.55;cursor:not-allowed}</style>
+</head>
+<body>
+  <header class="masthead">
+    <a class="wordmark" href="/">Northstar Supply</a>
+    <nav aria-label="Main navigation"><a href="#shop">Shop</a><a href="#account">Your account</a><a href="#reviews">Reviews</a></nav>
+    <form id="search-form" role="search"><label class="visually-hidden" for="search-term">Search products</label><input id="search-term" name="q" placeholder="Search the collection"><button class="button button-outline">Search</button></form>
+  </header>
+  <main class="page">
+    <section class="opening" aria-labelledby="opening-title">
+      <div class="opening-copy"><h1 id="opening-title">Good gear.<br>Less fuss.</h1><p class="lead">Useful essentials for your workspace and the moments around it.</p></div>
+      <aside class="feature-offer" aria-label="Featured product">
+        {% if featured_product %}
+        <h2 id="feature-name">{{ featured_product.name }}</h2><p id="feature-description">{{ featured_product.description }}</p>
+        <div class="offer-action"><strong id="feature-price" data-price="{{ featured_product.price }}">${{ '%.2f'|format(featured_product.price) }}</strong><button class="button" id="feature-add" data-product="{{ featured_product.id }}">Add to bag</button></div>
+        {% endif %}
+      </aside>
+    </section>
+    <div class="catalog-head" id="shop"><h2>The collection</h2><div class="catalog-actions"><span id="catalog-count" class="caption"></span><button id="checkout-button" class="button">Checkout bag (0)</button></div></div>
+    <p id="search-status" class="catalog-status" aria-live="polite">Browse the workspace collection.</p>
+    <p id="bag-status" class="catalog-status" aria-live="polite"></p>
+    <a id="search-preview" class="quiet-link" hidden target="_blank" rel="noreferrer">Open a shareable search summary</a>
+    <section class="products" id="products" aria-live="polite"><p>Loading the collection…</p></section>
+
+    <div class="customer-area">
+      <section class="customer-section" id="account"><h2>Your account</h2><p id="account-state" class="section-intro">Sign in to manage your profile, orders, and delivery preferences.</p>
+        <form action="/login" method="post" id="login-form" class="account-form"><label>Username<input name="username" autocomplete="username" required></label><label>Password<input name="password" type="password" autocomplete="current-password" required></label><button class="button">Sign in</button></form>
+        <div id="account-details" class="status" aria-live="polite"></div>
+        <form action="/account/preferences" method="post" class="preference-form"><label for="display-name">Delivery display name</label><div class="form-row"><input id="display-name" name="display_name"><button class="button button-outline">Save preferences</button></div></form>
+        <div class="account-links"><a href="/account/preferences">Delivery preferences</a><a href="/api/files/download?name=invoice.txt">Download invoice</a><a href="/logout">Sign out</a></div>
+        <div id="orders" class="order-list"></div>
+      </section>
+      <section class="customer-section" id="reviews"><h2>Reviews</h2><p class="section-intro">Leave a note about a product you have ordered.</p>
+        <form id="review-form" class="review-form"><label for="review-body">Your review</label><div class="form-row"><input id="review-body" name="body" maxlength="500" required><button class="button">Post review</button></div></form>
+        <div class="status" id="review-status" aria-live="polite"></div><iframe class="review-list" title="Recent reviews" src="/reviews"></iframe>
+        <form id="offer-form" class="offer-form"><label for="offer-term">Preview a member offer</label><div class="form-row"><input id="offer-term" name="offer"><button class="button button-outline">Preview offer</button></div></form>
+        <div class="account-links"><a href="/reviews/secure" target="_blank" rel="noreferrer">Open review list</a></div>
+      </section>
+    </div>
+
+    <section class="support-section" id="store-support"><div><h2>Order support</h2><p>Look up a receipt or retrieve a document from your account.</p></div>
+      <div class="support-tools"><div><label for="receipt-id">Receipt number</label><div class="form-row"><input id="receipt-id" type="number" min="1"><button id="receipt-button" class="button button-outline">View receipt</button></div><div id="receipt-status" class="status" aria-live="polite"></div></div>
+        <div><label for="document-name">Document name</label><div class="form-row"><input id="document-name" name="name" value="invoice.txt"><button id="document-button" class="button button-outline">Retrieve document</button></div><div id="document-status" class="status" aria-live="polite"></div></div></div>
+    </section>
+  </main>
+  <footer class="site-footer"><a class="wordmark" href="/">Northstar Supply</a><nav aria-label="Store links"><a href="#shop">Shop</a><a href="#store-support">Order support</a><a href="/admin">Store operations</a><a href="http://localhost:8010/">Assessment dashboard</a></nav></footer>
+<script>
+const money=n=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(n);const bag=[];
+function addToBag(productId,name){bag.push({id:productId,name});document.getElementById('checkout-button').textContent='Checkout bag ('+bag.length+')';document.getElementById('checkout-button').setAttribute('aria-label','Checkout bag with '+bag.length+' items');document.getElementById('bag-status').textContent=bag.map(item=>item.name).join(', ')}
+async function loadProducts(query=''){
+  const endpoint=query?'/api/products/search?q='+encodeURIComponent(query):'/api/products';
+  const response=await fetch(endpoint);const data=await response.json();const products=data.products||[];const container=document.getElementById('products');container.replaceChildren();
+  if(!products.length){const empty=document.createElement('p');empty.textContent=data.database_error?'Search unavailable: '+data.database_error:'No products matched your search.';container.append(empty)}
+  for(const product of products){const row=document.createElement('article');row.className='product-row';const details=document.createElement('div');details.className='product-details';const title=document.createElement('h3');title.textContent=product.name;const description=document.createElement('p');description.textContent=product.description;details.append(title,description);const price=document.createElement('strong');price.className='product-price';price.textContent=money(product.price);const button=document.createElement('button');button.className='button button-outline';button.textContent='Add to bag';button.dataset.product=product.id;button.dataset.name=product.name;row.append(details,price,button);container.append(row)}
+  document.getElementById('catalog-count').textContent=products.length+' products';document.getElementById('search-status').textContent=data.database_error?'Search unavailable ('+response.status+'): '+data.database_error:(query?'Results for “'+query+'”':'Browse the workspace collection.');
+  const preview=document.getElementById('search-preview');preview.hidden=!query;preview.href='/products/preview?q='+encodeURIComponent(query);
+}
+loadProducts();
+document.getElementById('search-form').addEventListener('submit',event=>{event.preventDefault();loadProducts(new FormData(event.currentTarget).get('q')||'')});
+document.getElementById('products').addEventListener('click',event=>{if(event.target.matches('button[data-product]'))addToBag(event.target.dataset.product,event.target.dataset.name)});
+document.getElementById('feature-add')?.addEventListener('click',event=>addToBag(event.currentTarget.dataset.product,document.getElementById('feature-name').textContent));
+document.getElementById('checkout-button').addEventListener('click',async()=>{if(!bag.length){document.getElementById('search-status').textContent='Your bag is empty.';return}const body=new URLSearchParams();bag.forEach(item=>body.append('product_id',item.id));const response=await fetch('/cart/checkout',{method:'POST',body});if(response.status===401||response.redirected){document.getElementById('account-state').textContent='Sign in to check out your bag.';document.getElementById('account').scrollIntoView({behavior:'smooth'});return}const data=await response.json();if(!response.ok){document.getElementById('search-status').textContent=data.error||'Checkout could not be completed.';return}document.getElementById('search-status').textContent=data.orders.map(order=>'Order #'+order.order_id+': '+order.product).join(' / ');document.getElementById('account-state').textContent='Order confirmed. Your receipts are listed below.';bag.length=0;document.getElementById('checkout-button').textContent='Checkout bag (0)';document.getElementById('bag-status').textContent='';loadOrders()});
+async function loadOrders(){const response=await fetch('/orders');if(!response.ok)return;const orders=await response.json();const list=document.getElementById('orders');list.replaceChildren();for(const item of orders){const row=document.createElement('div');row.className='order-row';const label=document.createElement('span');label.textContent='Order #'+item.id+' / '+item.product+' / '+money(item.amount);const link=document.createElement('a');link.href='/api/orders/insecure/'+item.id;link.textContent='Receipt';row.append(label,link);list.append(row)}if(orders.length)document.getElementById('account-state').textContent='Signed in. '+orders.length+' orders are available.'}
+fetch('/profile').then(response=>response.ok?loadOrders():null);
+document.getElementById('review-form').addEventListener('submit',async event=>{event.preventDefault();const response=await fetch('/reviews',{method:'POST',body:new FormData(event.currentTarget)});document.getElementById('review-status').textContent=response.ok?'Your review has been posted.':'We could not post that review.';if(response.ok){event.currentTarget.reset();document.querySelector('.review-list').src='/reviews?refresh='+Date.now()}});
+document.getElementById('offer-form').addEventListener('submit',event=>{event.preventDefault();const value=new FormData(event.currentTarget).get('offer')||'';window.open('/products/dom-preview#'+encodeURIComponent(value),'_blank','noopener')});
+document.getElementById('receipt-button').addEventListener('click',async()=>{const id=document.getElementById('receipt-id').value;if(!id)return;const response=await fetch('/api/orders/insecure/'+encodeURIComponent(id));document.getElementById('receipt-status').textContent=response.ok?JSON.stringify(await response.json()):'We could not find that receipt.'});
+document.getElementById('document-button').addEventListener('click',async()=>{const name=document.getElementById('document-name').value;const response=await fetch('/api/files/download?name='+encodeURIComponent(name));const data=await response.json();document.getElementById('document-status').textContent=data.content||data.error||'Document unavailable.'});
+</script>
+</body></html>
